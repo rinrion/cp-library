@@ -1,0 +1,1543 @@
+{
+	////////////////////////////////////////////////
+	//  in_out
+	////////////////////////////////////////////////
+
+	"cin1":{
+		"prefix": "cn1",
+		"body": [
+			"$1 $2;",
+			"cin >> $2;",
+			""
+		],
+		"description": "入力1"
+	},
+
+	"cin2":{
+		"prefix": "cn2",
+		"body": [
+			"$1 $2, $3;",
+			"cin >> $2 >> $3;",
+			""
+		],
+		"description": "入力2"
+	},
+
+	"cin3":{
+		"prefix": "cn3",
+		"body": [
+			"$1 $2, $3, $4;",
+			"cin >> $2 >> $3 >> $4;",
+			""
+		],
+		"description": "入力3"
+	},
+
+	"cin4":{
+		"prefix": "cn4",
+		"body": [
+			"$1 $2, $3, $4, $5;",
+			"cin >> $2 >> $3 >> $4 >> $5;",
+			""
+		],
+		"description": "入力4"
+	},
+
+	"cinvec":{
+		"prefix": "cnv",
+		"body": [
+			"v$1 $2 ($3);",
+			"rep(i, 0, $3){",
+			"  cin >> $2[i];",
+		  "}$0"
+		],  
+		"description": "入力 vec"
+	},
+
+	"cinvec2":{
+		"prefix": "cnv2",
+		"body": [
+			"v$1 $2($3), $4($3);",
+			"rep(i, 0, $3){",
+			"  cin >> $2[i] >> $4[i];",
+		  "}$0"
+		],
+		"description": "入力 vec 2"
+	},
+
+	"cinvec22":{
+		"prefix": "cnv22",
+		"body": [
+			"v$1 $2($3), $4($5);",
+			"rep(i, 0, $3){",
+			"  cin >> $2[i];",
+		  "}",
+			"rep(i, 0, $5){",
+			"  cin >> $4[i];",
+		  "}$0"
+		],
+		"description": "入力 vec 22"
+	},
+
+	// 出力
+	"cout_val":{
+		"prefix": "co",
+		"body": [
+			"cout << $1 << '\\n';",
+			""
+		],
+		"description": "cout_val"
+	},
+
+	"cout v2":{
+		"prefix": "co2",
+		"body": [
+			"cout << $1 <<\" \"<< $2 << '\\n';",
+			""
+		],
+		"description": "cout_val"
+	},
+
+	"cout":{
+		"prefix": "coe",
+		"body": [
+			"cout << '\\n';",
+			""
+		],
+		"description": "cout"
+	},
+
+	"setprecision":{
+		"prefix": "fixed",
+		"body": [
+			"cout << fixed << setprecision ($1) << $2 << '\\n';",
+			""
+		], 
+		"description": "小数点出力桁数指定"
+	},
+
+	"Yes_No":{
+		"prefix": "ifyes",
+		"body": [
+			"cout << (jdg ? \"Yes\" : \"No\") << '\\n';$0"
+		],
+		"description": "Yes_No"
+	},
+
+	"Takahashi_Aoki":{
+		"prefix": "iftaka",
+		"body": [
+			"cout << (jdg ? \"Takahashi\" : \"Aoki\") << '\\n';",
+			""
+		],
+		"description": "Takahashi_Aoki"
+	},
+
+	// デバッグ出力
+	"debug1":{
+		"prefix": "db1_h",
+		"body": [
+			"debug1($1, \"$1\");",
+			""
+		],
+		"description": "debug_1_heu"
+	},
+
+	// デバッグ出力
+	"debug_0":{
+		"prefix": "db01",
+		"body": [
+			"cerr <<\"$1: \"<< $1 << '\\n' ;$0"
+		],
+		"description": "debug_01"
+	},
+
+	"debug_02":{
+		"prefix": "db02",
+		"body": [
+			"cerr <<\"$1: \"<< $1 <<\" $2: \"<< $2 << '\\n' ;$0"
+		],
+		"description": "debug_02"
+	},
+
+	"debug_03":{
+		"prefix": "db03",
+		"body": [
+			"cerr <<\"$1: \"<< $1 << \" $2: \"<< $2 << \" $3: \"<< $3 << '\\n' ;$0"
+		],
+		"description": "debug_03"
+	},
+
+	"debug_1":{
+		"prefix": "db1",
+		"body": [
+			"cerr <<\"$1:\\n\";",
+			"for (auto x: $1) {cerr << x$2 <<\" \";} cerr << '\\n' ;"
+		],
+		"description": "debug_1"
+	},
+
+	"debug_1_map<key,val>":{
+		"prefix": "db1map<key,val>",
+		"body": [
+			"cerr <<\"$1:\\n\";",
+			"for (auto [key,val]: $1) {cerr << key<<\":\"<<val<<'\\n' ;};"
+		],
+		"description": "debug_1_map<key,val>"
+	},
+
+	"debug_1_map<key,vector>":{
+		"prefix": "db1map<key,vector>",
+		"body": [
+			"cerr <<\"$1:\\n\";",
+			"for (auto [key,vec]: $1) {",
+			"  cerr << key<<\":{\";",
+			"  for (auto x: vec) cerr << x$2 <<\",\";",
+			"  cerr <<\"}\\n\";",
+			"} cerr << '\\n' ;"
+		],
+		"description": "debug_1_map<key,vector>"
+	},
+
+	"debug_1_pair":{
+		"prefix": "db1p",
+		"body": [
+			"cerr <<\"$1:\\n\";",
+			"for (auto x: $1) {cerr <<\"(\"<< x.first <<\",\"<< x.second <<\")\";} cerr << '\\n' ;"
+		],
+		"description": "debug_1"
+	},
+
+	"debug_2":{
+		"prefix": "db2",
+		"body": [
+			"cerr <<\"$1:\\n\";",
+			"for (auto x: $1){for (auto y: x) cerr << y$2 <<\" \";cerr << '\\n' ;}cerr << '\\n' ;"
+		],
+		"description": "debug_2"
+	},
+
+	"debug_3":{
+		"prefix": "db3",
+		"body": [
+			"cerr <<\"$1:\\n\";",
+			"for (auto x: $1){",
+			"  for (auto y: x){",
+			"    for (auto z: y){",
+			"      cerr << z$2 <<\" \";",
+			"    }cerr << '\\n' ; ",
+			"  }cerr << '\\n' ; ",
+			"}"
+		],
+		"description": "debug_3"
+	},
+
+	"debug_line":{
+		"prefix": "dbl",
+		"body": [
+			"cerr << \"line \" << __LINE__ << \" is OK\\n\" ; "
+		],
+		"description": "debug_line"
+	},
+
+	"debug_n":{
+		"prefix": "dbn",
+		"body": [
+			"cerr << '\\n' ;"
+		],
+		"description": "debug_n"
+	},
+
+	"debug_commnet":{
+		"prefix": "dbc",
+		"body": [
+			"cerr << \"$1\\n\" ;"
+		],
+		"description": "debug_commnet"
+	},
+
+	// 繰り返し
+
+	"rep 0~n-1":{
+		"prefix": "rp1",
+		"body": [
+			"rep ($1, $2, $3){",
+			"  $4",
+			"}$0"
+		], 
+		"description": "rep ?-"
+	},
+
+	"rep2":{
+		"prefix": "rp2",
+		"body": [
+			"rep (i, 0, $1){",
+			"  rep (j, 0, $2){",
+			"    $3",
+			"  }",
+		"}$0"
+		], 
+		"description": "rep rep"
+	},
+
+	"rep3":{
+		"prefix": "rp3",
+		"body": [
+			"rep (i, 0, $1){",
+			"  rep (j, 0, $2){",
+			"    rep (k, 0, $3){",
+			"      $4",
+			"    }",
+			"  }",
+		"}$0"
+		], 
+		"description": "rep3"
+	},
+
+	"repr n-1~0":{
+		"prefix": "rpr",
+		"body": [
+			"// n-1 から 0 まで",
+			"repr ($1, $2 - 1, 0){",
+			"  $3",
+			"}$0"
+		], 
+		"description": "repr n-1~0"
+	},
+
+	"fo":{
+		"prefix": "fo",
+		"body": [
+			"for (int $1 = $2; $1 < $3; ++$1){",
+			"  $4",
+		  "}",
+			""
+		], 
+		"description": "for"
+	},
+
+	"fo2":{
+		"prefix": "fo2",
+		"body": [
+			"for (int i = 0; i < $1; ++i){",
+			"  for (int j = 0; j < $2; ++j){",
+			"    $3",
+			"  }",
+		  "}",
+			""
+		], 
+		"description": "for2"
+	},
+
+	"forr":{
+		"prefix": "forr",
+		"body": [
+			"for (int $1 = $2; $1 >= $3; --$1){",
+			"  $4",
+		  "}",
+			""
+		], 
+		"description": "forr"
+	},
+
+	"for auto":{
+		"prefix": "foa",
+		"body": [
+			"for (auto $1 : $2){",
+			"  $3",
+			"}",
+			""
+		], 
+		"description": "for auto"
+	},
+
+	"for auto pair":{
+		"prefix": "foapair",
+		"body": [
+			"for (auto [$1, $2] : $3){",
+			"  $4",
+			"}",
+			""
+		], 
+		"description": "for auto pair"
+	},
+
+	"vec1 cout":{
+		"prefix": "cov1",
+		"body": [
+			"for (auto x : $1){",
+			"  cout << x << \" \";",
+			"}",
+			"cout << '\\n';$0",
+		], 
+		"description": "vec1 cout"
+	},
+
+	"vec2 cout":{
+		"prefix": "cov2",
+		"body": [
+			"for (auto x: $1){",
+			"  for (auto y: x){",
+			"    cout << y <<\" \";",
+			"  }",
+			"cout << '\\n';$0",
+			"}$0"
+		], 
+		"description": "vec2 cout"
+	},
+
+	////////////////////////////////////////////////
+	//  words
+	////////////////////////////////////////////////
+
+		"a":{
+		"prefix": "a",
+		"body": [
+			"a"
+		],
+		"description": "a"
+	},
+
+	"b":{
+		"prefix": "b",
+		"body": [
+			"b"
+		],
+		"description": "b"
+	},
+
+	"c":{
+		"prefix": "c",
+		"body": [
+			"c"
+		],
+		"description": "c"
+	},
+
+	"d":{
+		"prefix": "d",
+		"body": [
+			"d"
+		],
+		"description": "d"
+	},
+
+	"i":{
+		"prefix": "i",
+		"body": [
+			"i"
+		],
+		"description": "i"
+	},
+
+	"h":{
+		"prefix": "h",
+		"body": [
+			"h"
+		],
+		"description": "h"
+	},
+
+	"w":{
+		"prefix": "w",
+		"body": [
+			"w"
+		],
+		"description": "w"
+	},
+
+	"l":{
+		"prefix": "l",
+		"body": [
+			"l"
+		],
+		"description": "l"
+	},
+
+	"j":{
+		"prefix": "j",
+		"body": [
+			"j"
+		],
+		"description": "j"
+	},
+	"k":{
+		"prefix": "k",
+		"body": [
+			"k"
+		],
+		"description": "k"
+	},
+
+	"n":{
+		"prefix": "n",
+		"body": [
+			"n"
+		],
+		"description": "n"
+	},
+
+	"m":{
+		"prefix": "m",
+		"body": [
+			"m"
+		],
+		"description": "m"
+	},
+
+	"s":{
+		"prefix": "s",
+		"body": [
+			"s"
+		],
+		"description": "s"
+	},
+
+	"t":{
+		"prefix": "t",
+		"body": [
+			"t"
+		],
+		"description": "t"
+	},
+
+	"u":{
+		"prefix": "u",
+		"body": [
+			"u"
+		],
+		"description": "u"
+	},
+
+	"v":{
+		"prefix": "v",
+		"body": [
+			"v"
+		],
+		"description": "v"
+	},
+
+	"q":{
+		"prefix": "q",
+		"body": [
+			"q"
+		],
+		"description": "q"
+	},
+
+	"y":{
+		"prefix": "y",
+		"body": [
+			"y"
+		],
+		"description": "y"
+	},
+
+	"while_q":{
+		"prefix": "whileq",
+		"body": [
+			"while(q--){",
+			"\t$0",
+			"}"
+		],
+		"description": "while_q"
+	},
+
+	"push_back":{
+		"prefix": "pushback",
+		"body": [
+			"push_back ($1);$2"
+		],
+		"description": "push_back"
+	},
+
+	"emplace_back":{
+		"prefix": "emplaceback",
+		"body": [
+			"emplace_back($1);$2"
+		],
+		"description": "emplace_back"
+	},
+
+	"make_pair":{
+		"prefix": "make_pair",
+		"body": [
+			"make_pair ($1, $2)$3"
+		],
+		"description": "make_pair"
+	},
+
+	"map":{
+		"prefix": "map",
+		"body": [
+			"map<$1, $2> mp;$4"
+		],
+		"description": "map"
+	},
+
+	"set":{
+		"prefix": "set",
+		"body": [
+			"set<$1> st;$4"
+		],
+		"description": "set"
+	},
+
+	"string":{
+		"prefix": "st",
+		"body": [
+			"string"
+		],
+		"description": "string"
+	},
+
+	"return":{
+		"prefix": "ret",
+		"body": [
+			"return $1;"
+		],
+		"description": "return 何か"
+	},
+
+	"sort":{
+		"prefix": "sor",
+		"body": [
+			"sort ($1.begin(), $1.end());$0"
+		], 
+		"description": "昇順のソート"
+	},
+
+	"sort reverse":{
+		"prefix": "sorr",
+		"body": [
+			"sort ($1.rbegin(), $1.rend());$0"
+		], 
+		"description": "降順のソート"
+	},
+
+	"reverse":{
+		"prefix": "rev",
+		"body": [
+			"reverse ($1.begin(), $1.end());$0"
+		], 
+		"description": "リバース"
+	},
+
+	"count_vec,string":{
+		"prefix": "count_vec,string",
+		"body": [
+			"count ($1.begin(), $1.end(), $2)$0"
+		],
+		"description": "count_vec,string"
+	},
+
+	"count_set":{
+		"prefix": "count_set,map",
+		"body": [
+			"$1.count ($2)$0"
+		],
+		"description": "count_set"
+	},
+
+	"tuple":{
+		"prefix": "get",
+		"body": [
+			"get<$1> ($2)"
+		],
+		"description": "tuple"
+	},
+
+	"vector":{
+		"prefix": "vec1",
+		"body": [
+			"vector<$1> $2 ($3);",
+			""
+		], 
+		"description": "配列"
+	},
+
+	"vector2":{
+		"prefix": "vec2",
+		"body": [
+			"vector<vector<$1>> $2 ($3, vector<$1> ($4));",
+			""
+		], 
+		"description": "多次元配列"
+	},
+
+		"accumulate":{
+		"prefix": "accumulate",
+		"body": [
+			"accumulate($1.begin(), $1.end(), 0);$0"
+		], 
+		"description": "accumulate"
+	},
+
+	"bool jdg":{
+		"prefix": "bool jdg",
+		"body": [
+			"bool jdg = $1;",
+			""
+		], 
+		"description": "bool jdg"
+	},
+
+	"ans":{
+		"prefix": "ans",
+		"body": [
+			"ll ans=0;",
+			""
+		], 
+		"description": "ans"
+	},
+
+	"sm":{
+		"prefix": "sm",
+		"body": [
+			"ll sm=0;",
+			""
+		], 
+		"description": "sm"
+	},
+
+	"setfill":{
+		"prefix": "setfill",
+		"body":[
+			"cout << setw($1) << setfill('0') <<$2",
+		],
+		"description": "setfill"
+	},
+
+	"all":{
+		"prefix": "all",
+		"body":[
+			"$1.begin(), $1.end()",
+		],
+		"description": "all"
+	},
+
+	"find in vector": {
+		"prefix": "find_vector",
+		"body": [
+			"${1:idxが返る 見つからなかったときは end()なので場合分け必要}find($2.begin(), $2.end(), $3)"
+		],
+		"description": "std::find for vector"
+	},
+
+	"find in set": {
+		"prefix": "find_set",
+		"body": [
+			"${1:idxが返る 見つからなかったときは end()なので場合分け必要}$2.find($3)"
+		],
+		"description": "set::find template"
+	},
+
+	"find in map": {
+  "prefix": "find_map",
+		"body": [
+			"${1:idxが返る 見つからなかったときは end()なので場合分け必要}$2.find($3)",
+			"// 返り値の変数名がitの場合 キー：it->first 値：it->second",
+		],
+		"description": "map::find template"
+	},
+
+	"change char int": {
+  "prefix": "char_int",
+		"body": [
+			"($1 - '$2')$0",
+		],
+		"description": "charとintの変換"
+	},
+
+	"hinagata": {
+		"prefix": "hinagata",
+		"body": [
+			"#include <bits/stdc++.h>",
+			"#include <atcoder/all>",
+			"using namespace std;",
+			"using namespace atcoder;",
+			"using ll = long long;",
+			"using ull = unsigned long long;",
+			"using vi = vector<int>;",
+			"using vvi = vector<vi>;",
+			"using vl = vector<ll>;",
+			"using vvl = vector<vl>;",
+			"using vs = vector<string>;",
+			"using vpi = vector<pair<int, int>>;",
+			"using vpl = vector<pair<ll, ll>>;",
+			"#define rep(i, s, n) for (int i = (s); i < (int)(n); ++i)",
+			"#define repr(i, s, n) for (int i = (s); i >= (int)(n); --i)",
+			"#define sz(x) ((int)(x).size())",
+			"template<typename T> bool chmin(T& a, T b){if(a > b){a = b; return true;} return false;}",
+			"template<typename T> bool chmax(T& a, T b){if(a < b){a = b; return true;} return false;}",
+			"auto _ = []{ios::sync_with_stdio(false); cin.tie(nullptr); return 0;}();",
+			"const int INFI = 1 << 30;",
+			"const ll INFL = 1LL << 62;",
+			"",
+			"int main() {",
+			"  $0",
+			"",
+			"  return 0;",
+			"}",
+			""
+		],
+		"description": "競プロ用 C++ テンプレート"
+	},
+	
+	////////////////////////////////////////////////
+	//  functions
+	////////////////////////////////////////////////
+
+	"next_permutation":{
+		"prefix": "nex",
+		"body": [
+			"vector<int> $1 ($2);",
+			"iota ($1.begin(), $1.end(), 0);",
+			"",
+			"do{",
+			"  rep (i, 0, $2){",
+			"",
+			"  }",
+			"} while (next_permutation ($1.begin(), $1.end()));",
+			""
+		], 
+		"description": "next_permutation"
+	},
+
+	"bit":{
+		"prefix": "bit",
+		"body": [
+			"for (int bit = 0; bit < (1 << $1); bit++){",
+			"  for (int i = 0; i < $1; i++){",
+			"    if (bit& (1 << i)){",
+			"      $2",
+			"    }",
+			"  }",
+			"}",
+			"",
+		], 
+		"description": "bit全探索"
+	},
+
+	"gcd":{
+		"prefix": "gcd",
+		"body": [
+			"$1 gcd ($1 a, $1 b){",
+			"  a=abs(a); // 絶対値",
+			"  b=abs(b);",
+			"  return b ? gcd(b, a % b) : a;",
+			"}",
+			"",
+		], 
+		"description": "最大公約数"
+	},
+
+	"lcm":{
+		"prefix": "lcm",
+		"body": [
+			"$1 gcd ($1 a, $1 b){",
+			"  return b ? gcd(b, a % b) : a;",
+			"}",
+			"",
+			"$1 lcm ($1 a, $1 b){",
+			"  return a * (b / gcd (a, b));",
+			"}",
+			"",
+		], 
+		"description": "最小公倍数"
+	},
+
+	"dfs":{
+		"prefix": "dfs",
+		"body": [
+			"vi seen; // resize",
+			"// vvi g // resize",
+			"",
+			"void dfs (int v, vi& seen){",
+			"  if (seen[v]) return;",
+			"  seen[v] = 1;",
+			"  for (auto x : /*グラフの辺,方向等*/){",
+			"",
+			"    dfs (x, seen);",
+			"  }",
+			"}",
+			"",
+		], 
+		"description": "dfs"
+	},
+
+	"point":{
+		"prefix": "point",
+		"body": [
+			"struct point {",
+			"  int i;",
+			"  int j;",
+			"  point(int I, int J) : i(I), j(J) {} // I,Jで初期化", 
+			"  point() : i(0), j(0) {} // 0で初期化",
+			"",
+			"  bool operator == (const point& other) const {",
+			"\t\t// i,j どちらも同じか",
+    	"    return (i == other.i && j == other.j);",
+    	"  }",
+			"",
+	    "  bool operator != (const point& other) const {",
+			"\t\t// i,j どちらも異なるか",
+      "    return !(*this == other);",
+    	"  }",
+			"",
+	    "  bool operator < (const point& other) const {",
+			"\t\t// iが同じ場合jで比較する",
+      "    return tie(i, j) < tie(other.i, other.j);",
+    	"  }",
+			"};",
+			"",
+		], 
+		"description": "座標i,jのstruct"
+	},
+
+	"Is Prime Function": {
+			"prefix": "sosuhantei",
+			"body": [
+					"bool is_prime(ll n) {",
+					"    if (n <= 1) return false;  // 1以下は素数でない",
+					"    if (n == 2) return true;   // 2は素数",
+					"    if (n % 2 == 0) return false; // 偶数は2以外素数でない",
+					"    for (ll i = 3; i * i <= n; i += 2) {",
+					"        if (n % i == 0) return false;",
+					"    }",
+					"    return true;",
+					"}"
+			],
+			"description": "Check if a single integer n is prime (true/false)"
+	},
+
+	
+	"Factorize Function": {
+  "prefix": "soinsubunkai",
+  "body": [
+		"// 素因数とその指数のpairの配列",
+    "vector<pair<ll, ll>> factorize(ll n) {",
+    "    ll limit = sqrt(n) + 1;",
+    "    vector<bool> is_prime(limit + 1, true);",
+    "    is_prime[0] = is_prime[1] = false;",
+    "",
+    "    for (ll i = 2; i * i <= limit; i++) {",
+    "        if (!is_prime[i]) continue;",
+    "        for (ll j = i * i; j <= limit; j += i) {",
+    "            is_prime[j] = false;",
+    "        }",
+    "    }",
+    "",
+    "    vector<ll> primes;",
+    "    for (ll i = 2; i <= limit; i++) {",
+    "        if (is_prime[i]) primes.push_back(i);",
+    "    }",
+    "",
+    "    vector<pair<ll, ll>> res;",
+    "    for (ll p : primes) {",
+    "        if (p * p > n) break;",
+    "        if (n % p != 0) continue;",
+    "        ll cnt = 0;",
+    "        while (n % p == 0) {",
+    "            n /= p;",
+    "            cnt++;",
+    "        }",
+    "        res.push_back({p, cnt});",
+    "    }",
+    "    if (n > 1) res.push_back({n, 1});",
+    "    return res;",
+    "}"
+  ],
+  "description": "Return the prime factorization of n as vector<pair<prime, exponent>>."
+	},
+		
+	"manhattan_distance":{
+		"prefix": "getManhattanDist",
+		"body":[
+			"int getManhattanDist (int si, int sj, int gi, int gj){",
+			"  return abs (si - gi) + abs (sj - gj);",
+		"}",
+		"",
+		],
+		"description": "マンハッタン距離計算"
+	},
+
+	"roundup":{
+		"prefix": "roundup",
+		"body":[
+			"// 切り上げ x >= 0, y > 0 のときのみ",
+			"ll roundup (ll x, ll y){",
+			"  return  (x + y - 1) / y;",
+		"}",
+		""
+		],
+		"description": "切り上げ"
+	},
+
+	"round":{
+		"prefix": "round",
+		"body":[
+			"// 四捨五入 x >= 0, y > 0 のときのみ",
+			"// 四捨五入する位pを10の倍数で指定",
+			"// 1の位ならp=1にするが関数内で10倍している",
+			"ll round(ll x, ll p){",
+			"p *= 10; // 1の位を指定なら10にする",
+			"  return (x + p / 2) / p * p;",
+		"}",
+		""
+		],
+		"description": "切り上げ"
+	},
+
+	"modint":{
+		"prefix": "modint",
+		"body":[
+			"using mint = modint998244353;${1:main関数の前}",
+			"// using mint = modint1000000007;", 
+			"//  mint ${2:変数名}; // 宣言 ", 
+			"//  cout << ${2:変数名}.val() << '\\n';",
+			""
+		],
+		"description": "modint"
+	},
+
+	"chmin":{
+		"prefix": "chmin",
+		"body":[
+			"chmin ($1, $2)$0"
+		],
+		"description": "chmin"
+	},
+
+	"chmax":{
+		"prefix": "chmax",
+		"body":[
+			"chmax ($1, $2)$0"
+		],
+		"description": "chmax"
+	},
+
+	"euclid distance squared": {
+    "prefix": "yukurid",
+    "body": [
+      "// sqrtなし 二乗して判定",
+			"ll euclid(ll x1, ll y1, ll x2, ll y2) {",
+      "    ll dx = x1 - x2;",
+      "    ll dy = y1 - y2;",
+      "    return dx * dx + dy * dy;",
+      "}"
+    ],
+    "description": "Euclidean distance squared (no sqrt)"
+  },	
+
+	"Union-find":{
+		"prefix": "unionfind",
+		"body":[
+			"// unionfind uni(n);",
+			"// uni.root(x);",
+			"// uni.issame(x,y);",
+			"// uni.unite(x,y);",
+			"// uni.size(x);",
+			"struct unionfind{",
+			"\tvector<int>par, siz; //par=親 siz=グループの頂点数;",
+			"\tunionfind(int n) : par(n, -1),siz(n, 1){}",
+			"",
+			"\t//根を求める",
+			"\tint root(int x){",
+			"\t\tif(par[x] == -1) return x;",
+			"\t\telse return par[x] = root(par[x]);",
+			"\t}",
+			"",
+			"\t//xとyが同グループか(根が同じか)",
+			"\tbool issame(int x, int y){",
+			"\t\treturn root(x) == root(y);",
+			"\t}",
+			"",
+			"\t//xを含むグループとyを含むグループを併合する",
+			"\tbool unite(int x, int y){",
+			"\t\tx=root(x), y=root(y);",
+			"\t\tif(x == y)return false;",
+			"\t\t//y側のサイズが小さくなるようにする",
+			"\t\tif(siz[x] < siz[y]) swap(x, y);",
+			"",
+			"\t\t//yをxの子とする",
+			"\t\tpar[y] = x;",
+			"\t\tsiz[x] += siz[y];",
+			"\t\treturn true;",
+			"\t}",
+			"",
+			"\t\t//xを含む連結成分の要素数を返す",
+			"\tint size(int x){",
+			"\t\treturn siz[root(x)];",
+			"\t}",
+			"};",
+			""
+		],
+		"description": "Union-Find"
+	},
+	
+	"megurushiki_nibuntansaku":{
+		"prefix": "meguru",
+		"body":[
+			"// 最小を求める場合 NG:制約最小値を1減らした値 OK:制約最大値を1増やした値",
+			"// 最大を求める場合 OK:制約最小値を1減らした値 NG:制約最大値を1増やした値",
+			"// 条件に合う値xの有無による返り値の違い",
+			"//   xあり:その値  xなし:xより大きい値の最小値  xより大きい値なし:0",
+			"$1 $2 = $3; // ex 最小) int ng = -1 int ok = 1e9 + 1",
+			"$1 $4 = $5;",
+			"while (abs ($2 - $4) > 1) {",
+			"  $1 mid =  ($2 + $4) / 2;",
+			"  // if (mid >= key) ok = mid; // ex最小",
+			"  // if (mid < key) ok = mid; // ex最大",
+			"  else ng = mid;",
+			"}",
+			"",
+			"cout << ok << '\\n';",
+			""
+		],
+		"description": "めぐる式二分探索"
+	},
+
+	"isWithin":{
+		"prefix": "isWithin",
+		"body":[
+			"bool isWithin (int I, int J, int h, int w){",
+			"  return (0 <= I && I < h && 0 <= J && J < w);",
+			"}",
+		],
+		"description": "枠内か判定"
+	},
+
+	"iota":{
+		"prefix": "iota",
+		"body":[
+			"iota ($1.begin (), $1.end (), 0);",
+			"",
+		],
+		"description": "0から始まる順列"
+	},
+
+	"rotate":{
+		"prefix": "rotate",
+		"body":[
+			"// gridを指定された回数だけ90度右回転したものを返す",
+			"vector<vector<int>> rotate (vector<vector<int>>& grid, int times) {",
+			"  int h = grid.size ();",
+			"  int w = grid[0].size ();",
+			"  vvi res=grid; ",
+			"  times %= 4; ",
+			"",
+			"  rep (i, 0, times){",
+			"    vector<vector<int>> rotatedGrid (w, vector<int> (h));",
+			"    rep (j, 0, h){",
+			"      rep (k, 0, w) rotatedGrid[k][h - j - 1] = res[j][k];",
+			"      }",
+			"    res = rotatedGrid;",
+			"    swap (h, w); // 回転後に行と列のサイズを入れ替える",
+			"  }",
+			"  return res;",
+			"}$0"
+		],
+		"description": "右90度回転"
+	},
+
+	"mergesort":{
+		"prefix": "mergesort",
+		"body":[
+			"// left から right-1 の範囲をソートする",
+			"// 精進ファイル内のシートに図あり",
+			"// 要素数nなら left = 0, right = n とすれば範囲が 0 ~ n-1 になる",
+			"void mergesort (vector<int> &a, int left, int right){",
+			"  if (right - left == 1) return ; // 要素数1になったら終了",
+			"  int mid = left +  (right - left) / 2;",
+			"  mergesort (a, left, mid);",
+			"  mergesort (a, mid, right);",
+			"  // コピーしておく 右側は左右反転",
+			"  vector<int> buf;",
+			"  for (int i = left; i < mid; ++i) buf.push_back (a[i]);",
+			"  for (int i = right - 1; i >= mid; --i) buf.push_back (a[i]);",
+			"  // 併合する",
+			"  int index_left = 0;",
+			"  int index_right = (int) buf.size () - 1;",
+			"  for (int i = left; i < right; ++i){",
+			"    // 左側採用",
+			"    if (buf[index_left] <= buf[index_right]) a[i] = buf (index_left);",
+			"    buf[index_left] ++;",
+			"    // 右側採用",
+			"    else{",
+			"      a[i] = buf (index_right);",
+			"      buf (index_right) --;",
+			"    }",
+			"  }",
+		"}$0",
+		],
+		"description": "mergesort"
+	},
+
+  "warshall_floyd_full": {
+    "prefix": "wf",
+    "body": [
+      "int $1; // 頂点数",
+      "vvl dist($1, vl($1, INFL));",
+      "",
+      "// ====================",
+      "// dist 初期化（どれか1つ使う）",
+      "// ====================",
+      "// --- ① 隣接リスト g の場合 ---",
+      "// 辺の情報 g[i] = { (j, w) } : i-j に重み w の辺",
+      "// for (int i = 0; i < $1; i++) {",
+      "//     dist[i][i] = 0; // 自分への距離は0",
+      "//     for (auto [j, w] : g[i]) {",
+      "//         dist[i][j] = w; // i→j の辺",
+      "//         // dist[j][i] = w; // j→i の辺 // 無向グラフの場合",
+      "//     }",
+      "// }",
+      "",
+      "// --- ② 辺リスト の場合 ---",
+      "// u, v, w : u-v に重み w の辺",
+      "// for (int i = 0; i < $1; i++) dist[i][i] = 0; // 自分への距離は0",
+      "// for (int i = 0; i < $2; i++) { // 辺の数 $2",
+      "//     dist[u[i]][v[i]] = w[i];",
+      "//     // dist[v[i]][u[i]] = w[i]; // 無向グラフの場合",
+      "// }",
+      "",
+      "// --- ③ すでに距離行列が与えられる場合 ---",
+      "// dist がそのまま入力される",
+      "// → 何もしなくてよい（必要なら dist[i][i]=0 を確認）",
+      "// // dist = input;",
+      "",
+      "// --- ④ コストなしグラフ（辺の重み=1） ---",
+      "// g[i] = { j } : i→j に辺がある",
+      "// → 辺のコストをすべて1として初期化",
+      "// for (int i = 0; i < $1; i++) {",
+      "//     dist[i][i] = 0;",
+      "//     for (int j : g[i]) {",
+      "//         dist[i][j] = 1;",
+      "//     }",
+      "// }",
+      "",
+      "// ====================",
+      "// ワーシャルフロイド本体",
+      "// ====================",
+      "for (int k = 0; k < $1; k++) {",
+      "    for (int i = 0; i < $1; i++) {",
+      "        for (int j = 0; j < $1; j++) {",
+      "            if (dist[i][k] == INFL || dist[k][j] == INFL) continue;",
+      "            dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);",
+      "        }",
+      "    }",
+      "}",
+      "",
+    ],
+    "description": "Warshall-Floyd with multiple initialization patterns"
+  },
+
+  "BitDP_TSP": {
+    "prefix": "bitdp",
+    "body": [
+      "// 頂点数 $1",
+      "int $1;",
+      "",
+      "// cost[i][j]: i→j のコスト（無い場合は INFL）",
+      "vvl cost(n, vector<ll>(n));",
+      "",
+      "// dp[mask][i]: 集合maskを訪れて最後にiにいるときの最小コスト",
+      "vvl dp(1<<n, vector<ll>(n, INFL));",
+      "",
+      "// 初期状態：0から開始（0は訪問済み）",
+      "dp[1<<0][0] = 0;",
+      "",
+      "for (int mask = 0; mask < (1<<n); mask++) {",
+      "    for (int i = 0; i < n; i++) {",
+      "        if (dp[mask][i] == INFL) continue;",
+      "        for (int j = 0; j < n; j++) {",
+      "            if (mask & (1<<j)) continue; // 既に訪問済み",
+      "            if (j == i) continue;        // 自己遷移防止",
+      "            if (cost[i][j] == INFL) continue; // 辺がない",
+      "",
+      "            dp[mask | (1<<j)][j] = min(",
+      "                dp[mask | (1<<j)][j],",
+      "                dp[mask][i] + cost[i][j]",
+      "            );",
+      "        }",
+      "    }",
+      "}",
+      "",
+      "long long ans = INFL;",
+      "",
+      "// --- パターン①: 全頂点訪問して終わり ---",
+      "// for (int i = 0; i < n; i++) {",
+      "//     ans = min(ans, dp[(1<<n)-1][i]);",
+      "// }",
+      "",
+      "// --- パターン②: 0に戻る（巡回） ---",
+      "// for (int i = 0; i < n; i++) {",
+      "//     if (cost[i][0] == INFL) continue;",
+      "//     ans = min(ans, dp[(1<<n)-1][i] + cost[i][0]);",
+      "// }",
+      "",
+      "cout << (ans == INFL ? -1 : ans) << '\\n';"
+    ],
+    "description": "Bit DP (TSP style, safe version)"
+  },
+
+	"sieve":{
+		"prefix": "sosurekkyo",
+		"body": [
+			"vector<int> sieve(int n) {",
+			"    vector<bool> is_prime(n + 1, true);",
+			"    vector<int> primes;",
+			"",
+			"    // 0と1は素数ではない",
+			"    if (n >= 0) is_prime[0] = false;",
+			"    if (n >= 1) is_prime[1] = false;",
+			"",
+			"    // 篩",
+			"    for (int i = 2; i * i <= n; i++) {",
+			"        if (!is_prime[i]) continue;",
+			"        // iの倍数をすべて消す（i*iからでOK）",
+			"        for (int j = i * i; j <= n; j += i) {",
+			"            is_prime[j] = false;",
+			"        }",
+			"    }",
+			"",
+			"    // 素数を列挙",
+			"    for (int i = 2; i <= n; i++) {",
+			"        if (is_prime[i]) primes.emplace_back(i);",
+			"    }",
+			"",
+			"    return primes;",
+			"}"
+		],
+		"description": "sieve (エラトステネスの篩でn以下の素数列挙)"
+	},
+
+  "dijkstra": {
+    "prefix": "dijkstra",
+    "body": [
+      "struct Edge {",
+      "    int to;   // 終点",
+      "    ll w;     // 重み",
+      "};",
+      "",
+      "vector<ll> dijkstra(int start,/*int goal,*/ const vector<vector<Edge>>& g){",
+			"    int n = g.size();",
+      "    vector<ll> dist(n, INFL);",
+      "    priority_queue<pair<ll,int>,vector<pair<ll,int>>,greater<pair<ll,int>>> pq;",
+      "    dist[start] = 0;",
+      "    pq.push({0,start});",
+      "",
+      "    while(!pq.empty()){",
+      "        auto [d,v] = pq.top(); // v:今見ている頂点 d:startからの距離",
+      "        pq.pop();",
+      "",
+      "        if(d > dist[v]) continue;",
+      "        // if(v == goal) return d; // goal指定時の早期終了",
+      "",
+      "        for(const auto& e : g[v]){",
+      "            if(dist[e.to] > dist[v] + e.w){",
+      "                dist[e.to] = dist[v] + e.w;",
+      "                pq.push({dist[e.to], e.to});",
+      "            }",
+      "        }",
+      "    }",
+      "",
+      "    return dist; ",
+      "}"
+    ],
+    "description": "ダイクストラ法（単一始点最短距離）"
+  },
+
+	"run lengh Encoding":{
+		"prefix": "runlength",
+		"body":[
+			"vector<pair<char, ll>> run_length(const string& s) {",
+			"  vector<pair<char, ll>> res;",
+			"  for (int i = 0; i < sz(s); ) {",
+			"    int j = i;",
+			"    while (j < sz(s) && s[i] == s[j]) j++;",
+			"    res.emplace_back(s[i], j - i);",
+			"    i = j;",
+			"  }",
+			"  return res;",
+			"}",
+			""
+			],
+		"description": "ランレングス圧縮 aaabb → a3b2"
+	},
+
+	"zaatsu":{
+		"prefix": "zaatsu",
+		"body":[
+			"${1:// 座標圧縮 配列の各値が全体の何番目に小さいか}",
+			"${2:// 引数: 処理したい配列  処理後の配列を返す}",
+			"vector<int> zaatsu (vector<int> a){",
+			"  vector<int> b = a;",
+			"  sort (b.begin (), b.end ()); ",
+			"  b.erase (unique (b.begin (), b.end ()), b.end ()); ",
+			"  vector<int> res (a.size ()); ",
+			"  for (int i = 0; i < a.size (); ++i) res[i] = lower_bound (b.begin (), b.end (), a[i]) - b.begin ();",
+			"  return res;",
+		"}$0"
+		],
+		"description": "座標圧縮"
+	},
+
+	"moveGrid":{
+		"prefix": "moveGrid",
+		"body":[
+			"vector<int> dI = {0, 1, 0, -1}, dJ = {1, 0, -1, 0}; // RDLU",
+			"// vector<char> dC = {'R', 'D', 'L', 'U'};",
+			"// map<char, int> dCI = {{'R', 0}, {'D', 1}, {'L', 2}, {'U', 3}};",
+			"// 8方向 U UR R DR D DL L UL",
+			"// vector<int> dI = {-1, -1, 0, 1, 1, 1, 0, -1};",
+			"// vector<int> dJ = { 0,  1, 1, 1, 0,-1,-1, -1};",
+			"",
+			"bool isWithin (int I, int J, int h, int w){",
+			"  return (0 <= I && I < h && 0 <= J && J < w);",
+			"}",
+			"",
+			"struct point {",
+			"  int i;",
+			"  int j;",
+			"  point(int I, int J) : i(I), j(J) {} // I,Jで初期化", 
+			"  point() : i(0), j(0) {} // 0で初期化",
+			"",
+			"  bool operator == (const point& other) const {",
+			"\t\t// i,j どちらも同じか",
+    	"    return (i == other.i && j == other.j);",
+    	"  }",
+			"",
+	    "  bool operator != (const point& other) const {",
+			"\t\t// i,j どちらも異なるか",
+      "    return !(*this == other);",
+    	"  }",
+			"",
+	    "  bool operator < (const point& other) const {",
+			"\t\t// iが同じ場合jで比較する",
+      "    return tie(i, j) < tie(other.i, other.j);",
+    	"  }",
+			"};",
+			"",
+			"point getMoveCell(point nowPos, int d, int step, int h, int w){",
+			"  int I = nowPos.i, J = nowPos.j;",
+			"  int moveI = I + dI[d] * step;",
+			"  int moveJ = J + dJ[d] * step;",
+			"",
+			"  if(!isWithin(moveI, moveJ, h, w)) return point(-1, -1); // 枠外",
+			"  return point(moveI, moveJ);",
+			"}",
+			""
+		],
+		"description": "moveGrid "
+	},
+
+	"getMoveCell":{
+		"prefix": "getMoveCell",
+		"body":[
+			"point getMoveCell(point nowPos, int d, int step, int h, int w){",
+			"  int I = nowPos.i, J = nowPos.j;",
+			"  int moveI = I + dI[d] * step;",
+			"  int moveJ = J + dJ[d] * step;",
+			"",
+			"  if(!isWithin(moveI, moveJ, h, w)) return point(-1, -1); // 枠外",
+			"  return point(moveI, moveJ);",
+		"}$0"
+		],
+		"description": "getMoveCell "
+	},
+	
+  "struct": {
+    "prefix": "struct",
+    "body": [
+      "struct $1 {",
+      "  $2 $3;",
+      "  $4 $5;",
+      "",
+      "  $1() {}",
+      "  $1($2 _$3, $4 _$5) : $3(_$3), $5(_$5) {}",
+      "};"
+    ],
+    "description": "struct with constructor"
+  },
+
+	"priority_queue_shoujun":{
+		"prefix": "priority_queue_shoujun",
+		"body":[
+			"priority_queue<$1, vector<$1>, greater<$1>>pq;",
+			""
+		],
+		"description": "優先度付きキュー 降順"
+	},
+
+	"priority_queue_koujun":{
+		"prefix": "priority_queue_koujun",
+		"body":[
+			"priority_queue<$1> pq;",
+			""
+		],
+		"description": "優先度付きキュー 昇順"
+	},
+
+	"stoi":{
+		"prefix": "stoi",
+		"body":[
+			"int stoi(const std::string& str, int base = 10) {",
+			"  int res = 0;",
+			"  for (char c : str) {",
+			"    res = res * base + (c - '0');",
+			"  }",
+			"  return res;",
+			"}",
+			"",
+		],
+		"description": "stoi"
+	},
+
+	"kaibunhantei":{
+		"prefix": "kaibunhantei",
+		"body":[
+			"bool isPalindrome(string s) {",
+			"  int n = sz(s);",
+			"  bool jdg = true;",
+			"  rep(i, 0, n / 2) {",
+			"    if (s[i] != s[n - i - 1]) {",
+			"      jdg = false;",
+			"      break;",
+			"    }",
+			"  }",
+			"  return jdg;",
+			"}",
+			"",
+		],
+		"description": "stoi"
+	},
+
+	"lambda function": {
+		"prefix": "lam",
+		"body": [
+			"auto f = [&](${1:/*型*/} ${2: /*引数変数 */}) -> ${3:/* 返り値の型 */} {",
+			"  ${4:/* 処理 */}",
+			"};"
+		],
+		"description": "ramda ラムダ関数"
+	},
+	
+	"yakusurekkyo": {
+		"prefix": "yakusurekkyo",
+		"body": [
+			"vl divisors(ll n) {",
+			"  vl res;",
+			"  for (ll i = 1; i * i <= n; i++) {",
+			"    if (n % i == 0) {",
+			"      res.push_back(i);",
+			"      if (i * i != n) res.push_back(n / i);",
+			"    }",
+			"  }",
+			"  // sort(res.begin(), res.end()); // 昇順が必要なときのみ有効化",
+			"  return res;",
+			"}"
+		]
+	}
+
+}
