@@ -1,4 +1,6 @@
 {
+	// cpp-snippets
+	
 	////////////////////////////////////////////////
 	//  in_out
 	////////////////////////////////////////////////
@@ -297,10 +299,10 @@
 	"repr n-1~0":{
 		"prefix": "rpr",
 		"body": [
-			"// n-1 から 0 まで",
-			"repr ($1, $2 - 1, 0){",
-			"  $3",
-			"}$0"
+			"// $2 から $3 まで",
+			"repr ($1, $2, $3){",
+			"  $4",
+			"}"
 		], 
 		"description": "repr n-1~0"
 	},
@@ -536,7 +538,7 @@
 	"while_q":{
 		"prefix": "whileq",
 		"body": [
-			"while(q--){",
+			"while($1--){",
 			"\t$0",
 			"}"
 		],
@@ -676,8 +678,7 @@
 	"bool jdg":{
 		"prefix": "bool jdg",
 		"body": [
-			"bool jdg = $1;",
-			""
+			"bool jdg = $1;$0"
 		], 
 		"description": "bool jdg"
 	},
@@ -727,7 +728,7 @@
 	"find in set": {
 		"prefix": "find_set",
 		"body": [
-			"${1:idxが返る 見つからなかったときは end()なので場合分け必要}$2.find($3)"
+			"$2.find($3)==$2.end()"
 		],
 		"description": "set::find template"
 	},
@@ -735,23 +736,17 @@
 	"find in map": {
   "prefix": "find_map",
 		"body": [
-			"${1:idxが返る 見つからなかったときは end()なので場合分け必要}$2.find($3)",
-			"// 返り値の変数名がitの場合 キー：it->first 値：it->second",
+			"$2.find($3)==$2.end()",
+			"// キー,値の参照方法(返り値の変数名がitの場合) [キー：it->first 値：it->second]",
 		],
 		"description": "map::find template"
-	},
-
-	"change char int": {
-  "prefix": "char_int",
-		"body": [
-			"($1 - '$2')$0",
-		],
-		"description": "charとintの変換"
 	},
 
 	"hinagata": {
 		"prefix": "hinagata",
 		"body": [
+			"// Pre-contest library:",
+			"// https://github.com/rinrion/cp-library",
 			"#include <bits/stdc++.h>",
 			"#include <atcoder/all>",
 			"using namespace std;",
@@ -763,6 +758,8 @@
 			"using vl = vector<ll>;",
 			"using vvl = vector<vl>;",
 			"using vs = vector<string>;",
+			"using pi = pair<int, int>;",
+			"using pl = pair<ll, ll>;",
 			"using vpi = vector<pair<int, int>>;",
 			"using vpl = vector<pair<ll, ll>>;",
 			"#define rep(i, s, n) for (int i = (s); i < (int)(n); ++i)",
@@ -1386,12 +1383,12 @@
 	"moveGrid":{
 		"prefix": "moveGrid",
 		"body":[
-			"vector<int> dI = {0, 1, 0, -1}, dJ = {1, 0, -1, 0}; // RDLU",
-			"// vector<char> dC = {'R', 'D', 'L', 'U'};",
-			"// map<char, int> dCI = {{'R', 0}, {'D', 1}, {'L', 2}, {'U', 3}};",
+			"vector<int> di = {0, 1, 0, -1}, dj = {1, 0, -1, 0}; // RDLU",
+			"// vector<char> dc = {'R', 'D', 'L', 'U'};",
+			"// map<char, int> dci = {{'R', 0}, {'D', 1}, {'L', 2}, {'U', 3}};",
 			"// 8方向 U UR R DR D DL L UL",
-			"// vector<int> dI = {-1, -1, 0, 1, 1, 1, 0, -1};",
-			"// vector<int> dJ = { 0,  1, 1, 1, 0,-1,-1, -1};",
+			"// vector<int> di = {-1, -1, 0, 1, 1, 1, 0, -1};",
+			"// vector<int> dj = { 0,  1, 1, 1, 0,-1,-1, -1};",
 			"",
 			"bool isWithin (int I, int J, int h, int w){",
 			"  return (0 <= I && I < h && 0 <= J && J < w);",
@@ -1421,8 +1418,8 @@
 			"",
 			"point getMoveCell(point nowPos, int d, int step, int h, int w){",
 			"  int I = nowPos.i, J = nowPos.j;",
-			"  int moveI = I + dI[d] * step;",
-			"  int moveJ = J + dJ[d] * step;",
+			"  int moveI = I + di[d] * step;",
+			"  int moveJ = J + dj[d] * step;",
 			"",
 			"  if(!isWithin(moveI, moveJ, h, w)) return point(-1, -1); // 枠外",
 			"  return point(moveI, moveJ);",
@@ -1437,8 +1434,8 @@
 		"body":[
 			"point getMoveCell(point nowPos, int d, int step, int h, int w){",
 			"  int I = nowPos.i, J = nowPos.j;",
-			"  int moveI = I + dI[d] * step;",
-			"  int moveJ = J + dJ[d] * step;",
+			"  int moveI = I + di[d] * step;",
+			"  int moveJ = J + dj[d] * step;",
 			"",
 			"  if(!isWithin(moveI, moveJ, h, w)) return point(-1, -1); // 枠外",
 			"  return point(moveI, moveJ);",
