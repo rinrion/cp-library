@@ -354,7 +354,7 @@
 	},
 
 	"for auto pair":{
-		"prefix": "foapair",
+		"prefix": "foap",
 		"body": [
 			"for (auto [$1, $2] : $3){",
 			"  $4",
@@ -585,14 +585,6 @@
 		"description": "set"
 	},
 
-	"string":{
-		"prefix": "st",
-		"body": [
-			"string"
-		],
-		"description": "string"
-	},
-
 	"return":{
 		"prefix": "ret",
 		"body": [
@@ -652,7 +644,7 @@
 	"vector":{
 		"prefix": "vec1",
 		"body": [
-			"vector<$1> $2 ($3);",
+			"v$1 $2 ($3);",
 			""
 		], 
 		"description": "配列"
@@ -661,7 +653,7 @@
 	"vector2":{
 		"prefix": "vec2",
 		"body": [
-			"vector<vector<$1>> $2 ($3, vector<$1> ($4));",
+			"vv$1 $2 ($3, v$1 ($4));",
 			""
 		], 
 		"description": "多次元配列"
@@ -670,7 +662,7 @@
 		"accumulate":{
 		"prefix": "accumulate",
 		"body": [
-			"accumulate($1.begin(), $1.end(), 0);$0"
+			"accumulate($1.begin(), $1.end(), 0)$0"
 		], 
 		"description": "accumulate"
 	},
@@ -704,7 +696,7 @@
 	"setfill":{
 		"prefix": "setfill",
 		"body":[
-			"cout << setw($1) << setfill('0') <<$2",
+			"cout << setw($1) << setfill('$2') <<$3",
 		],
 		"description": "setfill"
 	},
@@ -778,7 +770,7 @@
 			"}",
 			""
 		],
-		"description": "競プロ用 C++ テンプレート"
+		"description": "テンプレート"
 	},
 	
 	////////////////////////////////////////////////
@@ -792,6 +784,7 @@
 			"iota ($1.begin(), $1.end(), 0);",
 			"",
 			"do{",
+			"",
 			"  rep (i, 0, $2){",
 			"",
 			"  }",
@@ -805,6 +798,7 @@
 		"prefix": "bit",
 		"body": [
 			"for (int bit = 0; bit < (1 << $1); bit++){",
+			"",
 			"  for (int i = 0; i < $1; i++){",
 			"    if (bit& (1 << i)){",
 			"      $2",
@@ -842,25 +836,6 @@
 			"",
 		], 
 		"description": "最小公倍数"
-	},
-
-	"dfs":{
-		"prefix": "dfs",
-		"body": [
-			"vi seen; // resize",
-			"// vvi g // resize",
-			"",
-			"void dfs (int v, vi& seen){",
-			"  if (seen[v]) return;",
-			"  seen[v] = 1;",
-			"  for (auto x : /*グラフの辺,方向等*/){",
-			"",
-			"    dfs (x, seen);",
-			"  }",
-			"}",
-			"",
-		], 
-		"description": "dfs"
 	},
 
 	"point":{
@@ -990,9 +965,9 @@
 		"prefix": "modint",
 		"body":[
 			"using mint = modint998244353;${1:main関数の前}",
-			"// using mint = modint1000000007;", 
-			"//  mint ${2:変数名}; // 宣言 ", 
-			"//  cout << ${2:変数名}.val() << '\\n';",
+			"//\tusing mint = modint1000000007;", 
+			"//\tmint ${2:変数名}; // 宣言 ", 
+			"//\tcout << ${2:変数名}.val() << '\\n';",
 			""
 		],
 		"description": "modint"
@@ -1073,26 +1048,46 @@
 		"description": "Union-Find"
 	},
 	
-	"megurushiki_nibuntansaku":{
-		"prefix": "meguru",
+	"megurushiki_nibuntansaku_min":{
+		"prefix": "meguru_min",
 		"body":[
-			"// 最小を求める場合 NG:制約最小値を1減らした値 OK:制約最大値を1増やした値",
-			"// 最大を求める場合 OK:制約最小値を1減らした値 NG:制約最大値を1増やした値",
-			"// 条件に合う値xの有無による返り値の違い",
-			"//   xあり:その値  xなし:xより大きい値の最小値  xより大きい値なし:0",
-			"$1 $2 = $3; // ex 最小) int ng = -1 int ok = 1e9 + 1",
-			"$1 $4 = $5;",
-			"while (abs ($2 - $4) > 1) {",
-			"  $1 mid =  ($2 + $4) / 2;",
-			"  // if (mid >= key) ok = mid; // ex最小",
-			"  // if (mid < key) ok = mid; // ex最大",
-			"  else ng = mid;",
-			"}",
+			"int binary_search(int key) {",
+			"  // index = 0が条件を満たすこともあるので、初期値は -1",
+			"  int ng = -1; ",
+			"  // 最大値が条件を満たさないこともあるので、初期値は 最大値＋α",
+			"  int ok =${1:最大値+α}; ",
 			"",
-			"cout << ok << '\\n';",
+			"  while (ok - ng > 1) {",
+			"    int mid = ng + (ok - ng) / 2;",
+			"    if (mid >= key) ok = mid;",
+			"    else ng = mid;",
+			"  }  ",
+			"  return ok;",
+			"}",
 			""
 		],
-		"description": "めぐる式二分探索"
+		"description": "めぐる式二分探索_key以上の最小"
+	},
+
+	"megurushiki_nibuntansaku_max":{
+		"prefix": "meguru_min",
+		"body":[
+			"int binary_search(int key) {",
+			"  // index = 0が条件を満たすこともあるので、初期値は -1",
+			"  int ok = -1; ",
+			"  // 最大値が条件を満たさないこともあるので、初期値は 最大値＋α",
+			"  int ng =${1:最大値+α}; ",
+			"",
+			"  while (ng - ok > 1) {",
+			"    int mid = ok + (ng - ok) / 2;",
+			"    if (mid <= key) ok = mid;",
+			"    else ng = mid;",
+			"  }  ",
+			"  return ok;",
+			"}",
+			""
+		],
+		"description": "めぐる式二分探索_key以下の最大"
 	},
 
 	"isWithin":{
@@ -1108,6 +1103,7 @@
 	"iota":{
 		"prefix": "iota",
 		"body":[
+			"// 0から始まる順列",
 			"iota ($1.begin (), $1.end (), 0);",
 			"",
 		],
@@ -1117,15 +1113,16 @@
 	"rotate":{
 		"prefix": "rotate",
 		"body":[
-			"// gridを指定された回数だけ90度右回転したものを返す",
-			"vector<vector<int>> rotate (vector<vector<int>>& grid, int times) {",
+			"// 引数のgridを指定された回数だけ90度右回転したものを返す",
+			"// gridは変更されない",
+			"vvi rotate (vvi& grid, int times) {",
 			"  int h = grid.size ();",
 			"  int w = grid[0].size ();",
 			"  vvi res=grid; ",
 			"  times %= 4; ",
 			"",
 			"  rep (i, 0, times){",
-			"    vector<vector<int>> rotatedGrid (w, vector<int> (h));",
+			"    vvi rotatedGrid (w, vector<int> (h));",
 			"    rep (j, 0, h){",
 			"      rep (k, 0, w) rotatedGrid[k][h - j - 1] = res[j][k];",
 			"      }",
@@ -1142,7 +1139,6 @@
 		"prefix": "mergesort",
 		"body":[
 			"// left から right-1 の範囲をソートする",
-			"// 精進ファイル内のシートに図あり",
 			"// 要素数nなら left = 0, right = n とすれば範囲が 0 ~ n-1 になる",
 			"void mergesort (vector<int> &a, int left, int right){",
 			"  if (right - left == 1) return ; // 要素数1になったら終了",
@@ -1459,21 +1455,21 @@
   },
 
 	"priority_queue_shoujun":{
-		"prefix": "priority_queue_shoujun",
+		"prefix": "priority_queue_min->max",
 		"body":[
-			"priority_queue<$1, vector<$1>, greater<$1>>pq;",
-			""
-		],
-		"description": "優先度付きキュー 降順"
-	},
-
-	"priority_queue_koujun":{
-		"prefix": "priority_queue_koujun",
-		"body":[
-			"priority_queue<$1> pq;",
+			"priority_queue<$1, vector<$1>, greater<$1>>pq; // 昇順",
 			""
 		],
 		"description": "優先度付きキュー 昇順"
+	},
+
+	"priority_queue_koujun":{
+		"prefix": "priority_queue_max->min",
+		"body":[
+			"priority_queue<$1> pq; // 降順",
+			""
+		],
+		"description": "優先度付きキュー 降順"
 	},
 
 	"stoi":{
@@ -1511,7 +1507,7 @@
 	},
 
 	"lambda function": {
-		"prefix": "lam",
+		"prefix": "lamda",
 		"body": [
 			"auto f = [&](${1:/*型*/} ${2: /*引数変数 */}) -> ${3:/* 返り値の型 */} {",
 			"  ${4:/* 処理 */}",
@@ -1535,6 +1531,706 @@
 			"  return res;",
 			"}"
 		]
-	}
+	},
+
+	"グラフのBFS最短距離": {
+		"prefix": "bfsDistGraph",
+		"body": [
+			"// 隣接グラフ startからgoalへの最短ステップ数",
+			"int bfsDistGraph(int n, int start, int goal, vvi &g) {",
+			"\tvi dist(n, -1);",
+			"\tqueue<int> q;",
+			"",
+			"\tdist[start] = 0;",
+			"\tq.push(start);",
+			"",
+			"\twhile (!q.empty()) {",
+			"\t\tint now = q.front();",
+			"\t\tq.pop();",
+			"",
+			"\t\tif (now == goal) return dist[now];",
+			"",
+			"\t\tfor (auto next : g[now]) {",
+			"\t\t\tif (dist[next] != -1) continue;",
+			"\t\t\tdist[next] = dist[now] + 1;",
+			"\t\t\tq.push(next);",
+			"\t\t}",
+			"\t}",
+			"\treturn -1;  // 到達不可",
+			"}"
+		],
+		"description": "隣接リストのグラフでstartからgoalまでの最短ステップ数をBFSで求める"
+	},
+
+
+	"グリッドのBFS最短距離": {
+		"prefix": "bfsDistGrid",
+		"body": [
+			"// グリッド startからgoalへの最短ステップ数 moveGrid定義",
+			"int bfsDistGrid(int h, int w, point start, point goal, vvi &grid) {",
+			"\tvvi dist(h, vi(w, -1));",
+			"\tqueue<point> q;",
+			"",
+			"\tdist[start.i][start.j] = 0;",
+			"\tq.push(start);",
+			"",
+			"\twhile (!q.empty()) {",
+			"\t\tpoint now = q.front();",
+			"\t\tq.pop();",
+			"",
+			"\t\tif (now == goal) return dist[now.i][now.j];",
+			"",
+			"\t\trep(dir, 0, 4) {",
+			"\t\t\tpoint next = getMoveCell(now, dir, 1, h, w);",
+			"\t\t\tif (next.i == -1 || next.j == -1) continue; // 範囲外",
+			"\t\t\tif (grid[next.i][next.j] == 1) continue; // 壁",
+			"\t\t\tif (dist[next.i][next.j] != -1) continue; // 訪問済",
+			"\t\t\tdist[next.i][next.j] = dist[now.i][now.j] + 1;",
+			"\t\t\tq.push(next);",
+			"\t\t}",
+			"\t}",
+			"\treturn -1; // 到達不可",
+			"}"
+		],
+		"description": "グリッド上でstartからgoalまでの最短ステップ数をBFSで求める"
+	},
+	
+
+	"グラフのBFS到達判定": {
+		"prefix": "bfsReachGraph",
+		"body": [
+			"// 隣接グラフ 各頂点にたどり着けるか 1: 到達 0: 未達",
+			"vi bfsReachGraph(int n, int start, vvi g) {",
+			"\tvi isReach(n, 0);",
+			"\tqueue<int> q;",
+			"",
+			"\tisReach[start] = 1; // start",
+			"\tq.push(start);",
+			"",
+			"\twhile (!q.empty()) {",
+			"\t\tint now = q.front();",
+			"\t\tq.pop();",
+			"\t\tfor (auto next : g[now]) {",
+			"\t\t\tif (isReach[next] != 0) continue;",
+			"\t\t\tisReach[next] = 1;",
+			"\t\t\tq.push(next);",
+			"\t\t}",
+			"\t}",
+			"\treturn isReach;",
+			"}"
+		],
+		"description": "隣接グラフでstartから到達できる頂点を1、未到達を0にした配列を返す"
+	},
+
+
+	"グリッドのBFS到達判定": {
+		"prefix": "bfsReachGrid",
+		"body": [
+			"// グリッド 各頂点にたどり着けるか 1: 到達 0: 未達 moveGrid定義",
+			"vvi bfsReachGrid(int h, int w, point start) {",
+			"\tvvi isReach(h, vi(w, 0));",
+			"\tqueue<point> q;",
+			"",
+			"\tisReach[start.i][start.j] = 1; // start",
+			"\tq.push(start);",
+			"",
+			"\twhile (!q.empty()) {",
+			"\t\tpoint now = q.front();",
+			"\t\tq.pop();",
+			"",
+			"\t\trep(dir, 0, 4) {",
+			"\t\t\tpoint next = getMoveCell(now, dir, 1, h, w);",
+			"\t\t\tif (next.i == -1) continue; // 範囲外",
+			"\t\t\tif (isReach[next.i][next.j] != 0) continue; // 探索済み",
+			"\t\t\tisReach[next.i][next.j] = 1;",
+			"\t\t\tq.push(next);",
+			"\t\t}",
+			"\t}",
+			"\treturn isReach;",
+			"}"
+		],
+		"description": "グリッド上でstartから到達できるマスを1、未到達を0にした配列を返す"
+	},
+
+
+	"グラフのBFSステップ数配列": {
+		"prefix": "bfsStepGraph",
+		"body": [
+			"// 隣接グラフ startから全頂点への最短経路のステップ数配列を返す",
+			"// goalを指定しない場合 未到達は-1",
+			"vi bfsStepGraph(int n, int start, vvi g) {",
+			"\tvi step(n, -1);",
+			"\tqueue<int> q;",
+			"",
+			"\tstep[start] = 0; // start",
+			"\tq.push(start);",
+			"",
+			"\twhile (!q.empty()) {",
+			"\t\tint now = q.front();",
+			"\t\tq.pop();",
+			"\t\tfor (auto next : g[now]) {",
+			"\t\t\tif (step[next] != -1) continue;",
+			"\t\t\tstep[next] = step[now] + 1;",
+			"\t\t\tq.push(next);",
+			"\t\t}",
+			"\t}",
+			"\treturn step;",
+			"}"
+		],
+		"description": "隣接グラフでstartから各頂点までの最短ステップ数を配列で返す。未到達は-1"
+	},
+
+
+	"グリッドのBFSステップ数配列": {
+		"prefix": "bfsStepGrid",
+		"body": [
+			"// グリッド startから全マスへの最短経路のステップ数配列を返す",
+			"// goalを指定しない場合 未到達は-1",
+			"// moveGridを定義",
+			"vvi bfsStepGrid(int h, int w, point start) {",
+			"\tvvi step(h, vi(w, -1));",
+			"\tqueue<point> q;",
+			"",
+			"\tstep[start.i][start.j] = 0; // start",
+			"\tq.push({start.i, start.j});",
+			"",
+			"\twhile (!q.empty()) {",
+			"\t\tpoint now = q.front();",
+			"\t\tq.pop();",
+			"",
+			"\t\trep(dir, 0, 4) {",
+			"\t\t\tpoint next = getMoveCell(now, dir, 1, h, w);",
+			"\t\t\tif (next.i == -1) continue;",
+			"\t\t\tif (step[next.i][next.j] != -1) continue;",
+			"\t\t\tstep[next.i][next.j] = step[now.i][now.j] + 1;",
+			"\t\t\tq.push(next);",
+			"\t\t}",
+			"\t}",
+			"\treturn step;",
+			"}"
+		],
+		"description": "グリッド上でstartから各マスまでの最短ステップ数を配列で返す。未到達は-1"
+	},
+	
+	"グラフのBFS経路復元": {
+		"prefix": "bfsRouteGraph",
+		"body": [
+			"// 隣接グラフ start-goal間経路の頂点の配列を返す",
+			"// goalに到達できない場合はisReachdがfalseのまま",
+			"bool isReachd = false;",
+			"vi bfsRouteGraph(int n, int start, int goal, vvi g, bool &isReachd) {",
+			"\tvi route; // 経路を入れる配列",
+			"\tvi route_before(n, -2); // 直前にいた頂点",
+			"\tqueue<int> q;",
+			"\troute_before[start] = -1;",
+			"\tq.push(start);",
+			"",
+			"\twhile (!q.empty()) {",
+			"\t\tint now = q.front();",
+			"\t\tq.pop();",
+			"",
+			"\t\tfor (auto next : g[now]) {",
+			"\t\t\tif (route_before[next] != -2) continue; // すでに訪問済み",
+			"\t\t\troute_before[next] = now; // 直前にいた頂点を記録",
+			"",
+			"\t\t\tif (next == goal) {",
+			"\t\t\t\tisReachd = true;",
+			"\t\t\t\tbreak; // goalに到達したら終了",
+			"\t\t\t}",
+			"\t\t\tq.push(next);",
+			"\t\t}",
+			"\t\tif (isReachd) break;",
+			"\t}",
+			"\tif (!isReachd) return route; // goalに到達できない場合",
+			"",
+			"\tint now = goal; // goalまでの経路をrouteに追加してreverse",
+			"\twhile (now != -1) {",
+			"\t\troute.push_back(now);",
+			"\t\tnow = route_before[now];",
+			"\t}",
+			"",
+			"\treverse(route.begin(), route.end());",
+			"\treturn route;",
+			"}"
+		],
+		"description": "隣接グラフでstartからgoalまでの経路を頂点配列で返す。到達可否はisReachdで返す"
+	},
+
+
+	"グリッドのBFS経路復元": {
+		"prefix": "bfsRouteGrid",
+		"body": [
+			"// グリッド start-goal間経路のマス(point)の配列を返す",
+			"// goalに到達できない場合はisReachdがfalseのまま",
+			"// moveGridの内容を定義しておく",
+			"bool isReachd = false;",
+			"vector<point> bfsRouteGrid(int h, int w, point start, point goal, bool &isReachd) {",
+			"\tvector<point> route; // 経路を入れる配列",
+			"\tvector<vector<point>> route_before(h, vector<point>(w, {-2, -2})); // 直前にいた頂点",
+			"\tqueue<point> q;",
+			"\troute_before[start.i][start.j] = {-1, -1};",
+			"\tq.push(start);",
+			"",
+			"\twhile (!q.empty()) {",
+			"\t\tpoint now = q.front();",
+			"\t\tq.pop();",
+			"",
+			"\t\trep(dir, 0, 4) {",
+			"\t\t\tpoint next = getMoveCell(now, dir, 1, h, w);",
+			"\t\t\tif (next.i == -1) continue; // 枠外",
+			"\t\t\tif (route_before[next.i][next.j].i != -2) continue; // すでに訪問済み",
+			"",
+			"\t\t\troute_before[next.i][next.j] = {now.i, now.j}; // 直前にいた頂点",
+			"\t\t\tif (next == goal) {",
+			"\t\t\t\tisReachd = true;",
+			"\t\t\t\tbreak; // goalに到達したら終了",
+			"\t\t\t}",
+			"\t\t\tq.push(next);",
+			"\t\t}",
+			"\t\tif (isReachd) break;",
+			"\t}",
+			"\tif (!isReachd) return route; // goalに到達できない場合",
+			"",
+			"\tpoint now = goal; // goalまでの経路をrouteに追加してreverse",
+			"\twhile (now.i != -1) {",
+			"\t\troute.push_back(now);",
+			"\t\tnow = route_before[now.i][now.j];",
+			"\t}",
+			"\treverse(route.begin(), route.end());",
+			"\treturn route;",
+			"}"
+		],
+		"description": "グリッド上でstartからgoalまでの経路をpoint配列で返す。到達可否はisReachdで返す"
+	},
+
+	"グリッドのBFS経路方向": {
+		"prefix": "bfsDirGrid",
+		"body": [
+			"// グリッド start-goal間経路の方向(数字)の配列を返す 必要ならcharに変換する",
+			"// goalに到達できない場合はisReachdがfalseのまま",
+			"// moveGridの内容を定義しておく",
+			"bool isReachd = false;",
+			"vi bfsDirGrid(int h, int w, point start, point goal, bool &isReachd) {",
+			"\tvi route;",
+			"\tisReachd = false;",
+			"\tif (start.i == goal.i && start.j == goal.j) {",
+			"\t\tisReachd = true;",
+			"\t\treturn route;",
+			"\t}",
+			"",
+			"\tvector<vector<pair<point, int>>> route_before(h, vector<pair<point, int>>(w, {{-2, -2}, -1})); // 直前のマス、来た方向",
+			"\tqueue<point> q;",
+			"\troute_before[start.i][start.j].first = {-1, -1};",
+			"\tq.push(start);",
+			"",
+			"\twhile (!q.empty()) {",
+			"\t\tpoint now = q.front();",
+			"\t\tq.pop();",
+			"",
+			"\t\trep(dir, 0, 4) {",
+			"\t\t\tpoint next = getMoveCell(now, dir, 1, h, w);",
+			"\t\t\tif (next.i == -1 || next.j == -1) continue; // 枠外",
+			"\t\t\tif (route_before[next.i][next.j].first.i != -2) continue; // すでに訪問済み",
+			"",
+			"\t\t\troute_before[next.i][next.j] = make_pair(point{now.i, now.j}, dir); // 直前のマス、来た方向を記録",
+			"\t\t\tif (next.i == goal.i && next.j == goal.j) {",
+			"\t\t\t\tisReachd = true; // goalに到達したら終了",
+			"\t\t\t\tbreak;",
+			"\t\t\t}",
+			"\t\t\tq.push(next);",
+			"\t\t}",
+			"\t\tif (isReachd) break;",
+			"\t}",
+			"\tif (!isReachd) return route; // goalに到達できない場合",
+			"",
+			"\tpoint now = goal;",
+			"\twhile (now.i != start.i || now.j != start.j) {",
+			"\t\troute.push_back(route_before[now.i][now.j].second);",
+			"\t\tnow = route_before[now.i][now.j].first;",
+			"\t}",
+			"",
+			"\treverse(route.begin(), route.end());",
+			"\treturn route;",
+			"}"
+		],
+		"description": "グリッド上でstartからgoalまでの経路を方向番号の配列で返す。到達可否はisReachdで返す"
+	},
+
+	"基本のBFS": {
+		"prefix": "bfsBasic",
+		"body": [
+			"// 基本のBFS",
+			"queue<int> q;",
+			"vi seen(n, 0);",
+			"",
+			"q.push(start);",
+			"seen[start] = 1;",
+			"",
+			"while (!q.empty()) {",
+			"\tint v = q.front();",
+			"\tq.pop();",
+			"",
+			"\t// ここに頂点 v を訪問したときの処理を書く",
+			"",
+			"\tfor (int nv : g[v]) {",
+			"\t\tif (seen[nv]) continue;",
+			"\t\tseen[nv] = 1;",
+			"\t\tq.push(nv);",
+			"\t}",
+			"}"
+		],
+		"description": "隣接グラフをBFSで探索する基本テンプレート"
+	},
+
+	"DFS basic": {
+		"prefix": "dfs",
+		"body": [
+			"// 要準備：seen(n, 0), g(n)",
+			"vi seen;",
+			"vvi g;",
+			"",
+			"void dfs(int v) {",
+			"\tif (seen[v]) return;",
+			"\tseen[v] = 1;",
+			"",
+			"\tfor (int next : g[v]) {",
+			"\t\tdfs(next);",
+			"\t}",
+			"}"
+		],
+		"description": "Basic DFS"
+	},
+	"DFS sum": {
+		"prefix": "dfsSum",
+		"body": [
+			"// 要準備：seen(n, 0), g(n), t(n), ans = 0",
+			"vi seen;",
+			"vvi g;",
+			"vl t;",
+			"ll ans = 0;",
+			"",
+			"void dfs(int v) {",
+			"\tif (seen[v]) return;",
+			"\tseen[v] = 1;",
+			"",
+			"\tans += t[v];",
+			"",
+			"\tfor (int next : g[v]) {",
+			"\t\tdfs(next);",
+			"\t}",
+			"}"
+		],
+		"description": "DFS with sum aggregation"
+	},
+	"DFS backtracking": {
+		"prefix": "dfsBack",
+		"body": [
+			"void dfs(/*現在の状態を表す引数*/) {",
+			"\tif (/*終了条件*/) {",
+			"\t\t/*答えを更新*/",
+			"\t\treturn;",
+			"\t}",
+			"",
+			"\tfor (/*候補を順に調べる*/) {",
+			"\t\tif (/*選べない候補*/) continue;",
+			"",
+			"\t\t/*候補を選んで状態を更新*/",
+			"",
+			"\t\tdfs(/*更新後の状態*/);",
+			"",
+			"\t\t/*選んだ候補を取り消して状態を戻す*/",
+			"\t}",
+			"}"
+		],
+		"description": "DFS with backtracking"
+	},
+
+	"DP 1D": {
+		"prefix": "dp1",
+		"body": [
+			"// 1次元DP：状態 dp[i] の意味を決める",
+			"// 要準備：n、初期値、遷移式",
+			"// 最小値なら INFL、最大値なら -INFL など、目的に合う初期値を使う",
+			"vl dp(n, INFL);",
+			"dp[0] = 0;",
+			"",
+			"rep(i, 0, n) {",
+			"\t// dp[i] から次の状態へ遷移",
+			"\t/* dp[i + 1] = ...; */",
+			"}"
+		],
+		"description": "Basic 1D DP"
+	},
+	"DP 2D": {
+		"prefix": "dp2",
+		"body": [
+			"// 2次元DP：dp[i][j] の2つの状態の意味を決める",
+			"// 要準備：n、m、初期値、遷移式",
+			"// 最小値なら INFL、最大値なら -INFL など、目的に合う初期値を使う",
+			"vvl dp(n + 1, vl(m + 1, INFL));",
+			"dp[0][0] = 0;",
+			"",
+			"rep(i, 0, n) {",
+			"\trep(j, 0, m + 1) {",
+			"\t\t// dp[i][j] から次の状態へ遷移",
+			"\t\t/* dp[i + 1][...] = ...; */",
+			"\t}",
+			"}"
+		],
+		"description": "Basic 2D DP"
+	},
+	"DP memoization": {
+		"prefix": "dpMemo",
+		"body": [
+			"// メモ化再帰：状態 i の答えを memo[i] に保存する",
+			"// 要準備：状態数 n、基底条件、遷移式",
+			"// -1 を未計算の印にするため、答えに -1 が出る場合は別の管理方法を使う",
+			"// 基底条件:再帰をそこで止める条件",
+			"// 基底値:基底条件に当てはまったときに返す値",
+			"vl memo(n, -1);",
+			"",
+			"ll dp(int i) {",
+			"\tif (/* 基底条件 */) return /* 基底値 */;",
+			"\tif (memo[i] != -1) return memo[i];",
+			"",
+			"\tll res = /* 初期値 */;",
+			"\trep(k, 0, /* 遷移数 */) {",
+			"\t\t// 次の状態の答えを使って res を更新",
+			"\t\t/* res = ...; */",
+			"\t}",
+			"",
+			"\treturn memo[i] = res;",
+			"}"
+		],
+		"description": "DP with memoization"
+	},
+
+	"Shakutori Empty": {
+		"prefix": "shakutori-Empty",
+		"body": [
+			"// 空区間が発生する尺取り法",
+			"// 要準備：n、条件式。区間は [left, right)",
+			"int right = 0;",
+			"// ll sm = 0;",
+			"",
+			"rep(left, 0, ${1:n}) {",
+			"\twhile (right < $1) {",
+			"\t\tif (/* right を追加すると条件を満たさない */) break;",
+			"",
+			"\t\t// sm += ${2:a}[right]; // 累積値に right を追加",
+			"\t\tright++;",
+			"\t}",
+			"",
+			"\t// [left, right) を使って答えを更新",
+			"",
+			"\tif (left == right) right++;",
+			"\t// else sm -= $2[left]; // 累積値から left を削除",
+			"}"
+		],
+		"description": "Two pointers: empty interval allowed"
+	},
+	"Shakutori NonEmpty": {
+		"prefix": "shakutori-NonEmpty",
+		"body": [
+			"// 空区間が発生しない尺取り法",
+			"// 要準備：n、条件式。各 left で有効な非空区間が存在すること",
+			"int right = 0;",
+			"// ll sm = 0;",
+			"",
+			"rep(left, 0, ${1:n}) {",
+			"\twhile (right < $1) {",
+			"\t\tif (/* right を追加すると条件を満たさない */) break;",
+			"",
+			"\t\t// sm += ${2:a}[right]; // 累積値に right を追加",
+			"\t\tright++;",
+			"\t}",
+			"",
+			"\t// [left, right) を使って答えを更新",
+			"",
+			"\t// sm -= $2[left]; // 累積値から left を削除",
+			"}"
+		],
+		"description": "Two pointers: non-empty interval"
+	},
+
+	"DFS Combination No Repeat": {
+		"prefix": "dfsCombi",
+		"body": [
+			"// 重複なし組合せ：順序を区別せず、同じ値を使わない",
+			"// 例：値1～3から2個選ぶ → [1,2], [1,3], [2,3]",
+			"// ポイント：次の候補を i + 1 から選ぶ",
+			"// 要準備：combi.resize(size)",
+			"// 結果はvec_combiに格納",
+			"// nowsize:現在の要素数 スタート時は0を指定する",
+			"// size:作りたい要素数 min,max:要素の最小値最大値",
+			"",
+			"vi combi;",
+			"vvi vec_combi;",
+			"",
+			"void dfs(int nowsize, int size, int min, int max) {",
+			"\tif (nowsize == size) {",
+			"\t\tvec_combi.push_back(combi);",
+			"\t\treturn;",
+			"\t}",
+			"",
+			"\tfor (int i = min; i <= max; i++) {",
+			"\t\tcombi[nowsize] = i;",
+			"\t\tdfs(nowsize + 1, size, i + 1, max);",
+			"\t}",
+			"}"
+		],
+		"description": "DFS combinations without repetition"
+	},
+
+	"DFS Combination With Repeat": {
+		"prefix": "dfsCombiRep",
+		"body": [
+			"// 重複あり組合せ：順序を区別せず、同じ値を何度でも使える",
+			"// 例：値1～2から2個選ぶ → [1,1], [1,2], [2,2]",
+			"// [1,2] と [2,1] は同じ組合せなので、両方は生成しない",
+			"// ポイント：次の候補を i から選ぶ",
+			"// 要準備：combi.resize(size)",
+			"// 結果はvec_combiに格納",
+			"// nowsize:現在の要素数 スタート時は0を指定する",
+			"// size:作りたい要素数 min,max:要素の最小値最大値",
+			"",
+			"vi combi;",
+			"vvi vec_combi;",
+			"",
+			"void dfs(int nowsize, int size, int min, int max) {",
+			"\tif (nowsize == size) {",
+			"\t\tvec_combi.push_back(combi);",
+			"\t\treturn;",
+			"\t}",
+			"",
+			"\tfor (int i = min; i <= max; i++) {",
+			"\t\tcombi[nowsize] = i;",
+			"\t\tdfs(nowsize + 1, size, i, max);",
+			"\t}",
+			"}"
+		],
+		"description": "DFS combinations with repetition"
+	},
+
+	"DFS Permutation No Repeat": {
+		"prefix": "dfsPerm",
+		"body": [
+			"// 重複なし順列：順序を区別し、同じ値を使わない",
+			"// 例：値1～3から2個並べる → [1,2], [2,1], [1,3], [3,1], [2,3], [3,2]",
+			"// ポイント：毎回 min～max から選び、used で使用済みの値を除外する",
+			"// 要準備：combi.resize(size), used.resize(max + 1, false)",
+			"// 結果はvec_combiに格納",
+			"// nowsize:現在の要素数 スタート時は0を指定する",
+			"// size:作りたい要素数 min,max:要素の最小値最大値",
+			"",
+			"vi combi;",
+			"vvi vec_combi;",
+			"vector<bool> used;",
+			"",
+			"void dfs(int nowsize, int size, int min, int max) {",
+			"\tif (nowsize == size) {",
+			"\t\tvec_combi.push_back(combi);",
+			"\t\treturn;",
+			"\t}",
+			"",
+			"\tfor (int i = min; i <= max; i++) {",
+			"\t\tif (used[i]) continue;",
+			"",
+			"\t\tcombi[nowsize] = i;",
+			"\t\tused[i] = true;",
+			"\t\tdfs(nowsize + 1, size, min, max);",
+			"\t\tused[i] = false;",
+			"\t}",
+			"}"
+		],
+		"description": "DFS permutations without repetition"
+	},
+
+	"DFS Permutation With Repeat": {
+		"prefix": "dfsPermRep",
+		"body": [
+			"// 重複あり順列：順序を区別し、同じ値を何度でも使える",
+			"// 例：値1～2から2個並べる → [1,1], [1,2], [2,1], [2,2]",
+			"// ポイント：毎回 min～max から選び、used での使用済み判定はしない",
+			"// 要準備：combi.resize(size)",
+			"// 結果はvec_combiに格納",
+			"// nowsize:現在の要素数 スタート時は0を指定する",
+			"// size:作りたい要素数 min,max:要素の最小値最大値",
+			"",
+			"vi combi;",
+			"vvi vec_combi;",
+			"",
+			"void dfs(int nowsize, int size, int min, int max) {",
+			"\tif (nowsize == size) {",
+			"\t\tvec_combi.push_back(combi);",
+			"\t\treturn;",
+			"\t}",
+			"",
+			"\tfor (int i = min; i <= max; i++) {",
+			"\t\tcombi[nowsize] = i;",
+			"\t\tdfs(nowsize + 1, size, min, max);",
+			"\t}",
+			"}"
+		],
+		"description": "DFS permutations with repetition"
+	},
+
+	"10進数をk進数に変換": {
+		"prefix": "to_base",
+		"body": [
+			"// 10進数(ll)を指定の基数(k)表記(string)に変換 基数2〜36",
+			"string to_base(ll n, int k) {",
+			"\tif (n == 0) return \"0\";",
+			"\tstring digits = \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ\";",
+			"\tstring res;",
+			"\tbool jdg = (n < 0);",
+			"\tif (jdg) n = -n;",
+			"\twhile (n > 0) {",
+			"\t\tres.push_back(digits[n % k]);",
+			"\t\tn /= k;",
+			"\t}",
+			"\tif (jdg) res.push_back('-');",
+			"\treverse(res.begin(), res.end());",
+			"\treturn res;",
+			"}"
+		],
+		"description": "10進数のllを基数k（2〜36）の文字列に変換する"
+	},
+	
+	"k進数を10進数に変換": {
+		"prefix": "from_base",
+		"body": [
+			"// k進数文字列sをlong longに変換する",
+			"// 前提：結果がlong longに収まる場合のみ使用可",
+			"// 収まらない場合はLLONG_MAXを返す",
+			"ll from_base(const string &s, int k) {",
+			"\tstatic const string digits = \"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ\";",
+			"\tunordered_map<char, int> mp;",
+			"\tfor (int i = 0; i < (int)digits.size(); ++i) {",
+			"\t\tmp[digits[i]] = i;",
+			"\t}",
+			"",
+			"\tll n = 0;",
+			"\tfor (char c : s) {",
+			"\t\tint d = mp[c];",
+			"",
+			"\t\t// n * k がlong longを超えるか",
+			"\t\tif (n > LLONG_MAX / k) {",
+			"\t\t\treturn LLONG_MAX;",
+			"\t\t}",
+			"\t\tn *= k;",
+			"",
+			"\t\t// n + d がlong longを超えるか",
+			"\t\tif (n > LLONG_MAX - d) {",
+			"\t\t\treturn LLONG_MAX;",
+			"\t\t}",
+			"\t\tn += d;",
+			"\t}",
+			"\treturn n;",
+			"}"
+		],
+		"description": "k進数の文字列を10進数のllに変換する。オーバーフロー時はLLONG_MAXを返す"
+	},
+
 
 }
