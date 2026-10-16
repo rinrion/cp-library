@@ -1,0 +1,690 @@
+/*
+my-library
+
+----------------------------------------
+	BFS各種
+----------------------------------------
+
+// 隣接グラフ startからgoalへの最短ステップ数				
+int bfsDistGraph(int n, int start, int goal, vvi &g) {				
+	vi dist(n, -1);			
+	queue<int> q;			
+				
+	dist[start] = 0;			
+	q.push(start);			
+				
+	while (!q.empty()) {			
+		int now = q.front();		
+		q.pop();		
+				
+		if (now == goal) return dist[now];		
+				
+		for (auto next : g[now]) {		
+			if (dist[next] != -1) continue;	
+			dist[next] = dist[now] + 1;	
+			q.push(next);	
+		}		
+	}			
+	return -1;  // 到達不可			
+}				
+				
+// グリッド startからgoalへの最短ステップ数 moveGrid定義				
+int bfsDistGrid(int h, int w, point start, point goal, vvi &grid) {				
+	vvi dist(h, vi(w, -1));			
+	queue<point> q;			
+				
+	dist[start.i][start.j] = 0;			
+	q.push(start);			
+				
+	while (!q.empty()) {			
+		point now = q.front();		
+		q.pop();		
+				
+		if (now == goal) return dist[now.i][now.j];		
+				
+		rep (dir, 0, 4){		
+			point next = getMoveCell(now, dir, 1, h, w);	
+			if(next.i == -1 || next.j == -1) continue; // 範囲外	
+			if (grid[next.i][next.j] == 1) continue; // 壁	
+			if (dist[next.i][next.j] != -1) continue; // 訪問済	
+			dist[next.i][next.j] = dist[now.i][now.j] + 1;	
+			q.push(next);	
+		}		
+	}			
+	return -1;  // 到達不可			
+}				
+				
+// 隣接グラフ 各頂点にたどり着けるか 1: 到達 0: 未達				
+vi bfsReachGraph (int n, int start, vvi g){				
+	vi isReach (n, 0);			
+	queue<int> q;			
+				
+	isReach[start] = 1; // start			
+	q.push (start);			
+				
+	while (!q.empty()){			
+		int now = q.front ();		
+		q.pop ();		
+		for (auto next : g[now]){		
+			if (isReach[next] != 0) continue;	
+			isReach[next] = 1;	
+			q.push (next);	
+		}		
+	}			
+	return isReach;			
+}				
+				
+// グリッド 各頂点にたどり着けるか 1: 到達 0: 未達　 moveGrid定義				
+vvi bfsReachGrid(int h, int w, point start) {				
+	vvi isReach(h, vi(w, 0));			
+	queue<point> q;			
+				
+	isReach[start.i][start.j] = 1; // start			
+	q.push(start);			
+				
+	while (!q.empty()) {			
+		point now = q.front();		
+		q.pop();		
+				
+		rep(dir, 0, 4) {		
+			point next = getMoveCell(now, dir, 1, h, w);	
+			if (next.i == -1) continue;                  // 範囲外	
+			if (isReach[next.i][next.j] != 0) continue;  // 探索済み	
+			isReach[next.i][next.j] = 1;	
+			q.push(next);	
+		}		
+	}			
+	return isReach;			
+}				
+				
+				
+// 隣接グラフ startから全頂点への最短経路のステップ数配列を返す				
+// goalを指定しない場合 未到達は-1				
+vi bfsStepGraph (int n, int start, vvi g){				
+	vi step (n, -1);			
+	queue<int> q;			
+				
+	step[start] = 0; // start			
+	q.push (start);			
+				
+	while (!q.empty()){			
+		int now = q.front ();		
+		q.pop ();		
+		for (auto next : g[now]){		
+			if (step[next] != -1) continue;	
+			step[next] = step[now] + 1;	
+			q.push (next);	
+		}		
+	}			
+	return step;			
+}				
+				
+// グリッド startから全マスへの最短経路のステップ数配列を返す				
+// goalを指定しない場合 未到達は-1				
+// moveGrid を定義				
+vvi bfsStepGrid (int h, int w, point start){				
+	vvi step (h, vi (w, -1));			
+	queue<point> q;			
+				
+	step[start.i][start.j] = 0; // start			
+	q.push ({start.i, start.j});			
+				
+	while (!q.empty()){			
+		point now = q.front ();		
+		q.pop ();		
+				
+		rep (dir, 0, 4){		
+			point next = getMoveCell(now, dir, 1, h, w);	
+			if(next.i == -1) continue;	
+			if (step[next.i][next.j] != -1) continue;	
+			step[next.i][next.j] = step[now.i][now.j] + 1;	
+			q.push (next);	
+		}		
+	}			
+	return step;			
+}				
+				
+// 隣接グラフ start-goal間経路の頂点の配列を返す				
+// goalに到達できない場合はisReachdがfalseのまま				
+bool isReachd = false;				
+vi bfsRouteGraph (int n, int start, int goal, vvi g, bool &isReachd){				
+	vi route; // 経路を入れる配列			
+	vi route_before (n, -2); // 直前にいた頂点			
+	queue<int> q;			
+	route_before[start] = -1;			
+	q.push (start);			
+				
+	while (!q.empty ()){			
+		int now = q.front ();		
+		q.pop ();		
+				
+		for (auto next : g[now]){		
+			if (route_before[next] != -2) continue; // すでに訪問済み	
+			route_before[next] = now; // 直前にいた頂点を記録	
+				
+			if (next == goal) {	
+				isReachd = true;
+				break; // goalに到達したら終了
+			}	
+			q.push (next);	
+		}		
+		if (isReachd) break;		
+	}			
+	if (!isReachd) return route; // goalに到達できない場合			
+				
+	int now = goal; // 頂点goalまでの経路をrouteに追加→reverse			
+	while (now != -1) {			
+		route.push_back (now);		
+		now = route_before[now];		
+	}			
+				
+	reverse (route.begin (), route.end ());			
+	return route;			
+}				
+				
+// グリッド  start-goal間経路のマス(point)の配列を返す				
+// goalに到達できない場合はisReachdがfalseのまま				
+// MoveGrid の内容を定義しておく				
+bool isReachd = false;				
+vector<point> bfsRouteGrid(int h, int w, point start, point goal, bool &isReachd){				
+	vector<point> route; // 経路を入れる配列			
+	vector<vector<point>> route_before(h, vector<point>(w, {-2, -2})); // 直前にいた頂点			
+	queue<point> q;			
+	route_before[start.i][start.j] = {-1, -1};			
+	q.push (start);			
+				
+	while (!q.empty ()){			
+		point now = q.front();		
+		q.pop ();		
+				
+		rep(dir, 0, 4) {		
+			point next = getMoveCell(now, dir, 1, h, w);	
+			if (next.i == -1) continue; // 枠外	
+			if (route_before[next.i][next.j].i != -2) continue; // すでに訪問済み	
+				
+			route_before[next.i][next.j] = {now.i, now.j}; // 直前にいた頂点	
+			if(next == goal) {	
+				isReachd = true;
+				break; // goalに到達したら終了
+			}	
+			q.push (next);	
+		}		
+		if (isReachd) break;		
+	}			
+	if (!isReachd) return route; // goalに到達できない場合			
+				
+	point now = goal; // 頂点goalまでの経路をrouteに追加→reverse			
+	while (now.i != -1) {			
+		route.push_back (now);		
+		now = route_before[now.i][now.j];		
+	}			
+	reverse (route.begin (), route.end ());			
+	return route;			
+}				
+				
+// グリッド  start-goal間経路の方向(数字)の配列を返す 必要ならcharに変換する				
+// goalに到達できない場合はisReachdがfalseのまま				
+// MoveGrid の内容を定義しておく				
+bool isReachd = false;				
+vi bfsDirGrid (int h, int w, point start, point goal, bool &isReachd){				
+	vi route;			
+	vector<vector<pair<point, int>>> route_before (h, vector<pair<point, int>>(w, {{-2, -2}, -1})); // 直前のマス, 来た方向			
+	queue<point> q;			
+	route_before[start.i][start.j].first = {-1, -1};			
+	q.push (start);			
+				
+	while (!q.empty ()){			
+		point now = q.front ();		
+		q.pop ();		
+				
+		rep (dir, 0, 4){		
+			point next = getMoveCell(now, dir, 1, h, w);	
+			if(next.i == -1) continue; // 枠外	
+			if (route_before[next.i][next.j].second != -1) continue; // 来た方向が記録済:すでに訪問済み	
+			if (route_before[next.i][next.j].first.i != -2) continue; // 直前のマスが記録済:すでに訪問済み	
+				
+			route_before[next.i][next.j] = make_pair (point{now.i, now.j}, dir); // 直前のマス, 来た方向を記録	
+			if (now.i == goal.i && now.j == goal.j){	
+				isReachd = true; // goalに到達したら終了
+				break;
+			}	
+			q.push (next);	
+		}		
+		if (isReachd) break;		
+	}			
+	if (!isReachd) return route; // goalに到達できない場合			
+				
+	point now = goal;			
+	while (now != start){			
+		route.push_back (route_before[now.i][now.j].second);		
+		now = route_before[now.i][now.j].first;		
+	}			
+				
+	reverse (route.begin (), route.end ());			
+	return route;			
+}				
+				
+// 基本のＢＦＳ				
+queue<int> q;				
+vi seen(n, 0);				
+				
+q.push(start);				
+seen[start] = 1;				
+				
+while(!q.empty()){				
+	int v = q.front();			
+	q.pop();			
+				
+	// ここに頂点 v を訪問したときの処理を書く			
+				
+	for(int nv : g[v]){			
+		if(seen[nv]) continue;		
+		seen[nv] = 1;		
+		q.push(nv);		
+	}			
+}				
+				
+----------------------------------------
+	DFS各種
+----------------------------------------
+
+基本のＤＦＳ
+void dfs(int p){
+  if(seen[p]) return;
+  seen[p] = true;
+
+  for(/*次の状態の候補集合*/){
+    dfs(/*次の状態*/);
+  }
+}
+
+ansに値を集計していく場合　グローバルにans変数を宣言しておく
+void dfs(int v){
+  if(seen[v]) return;
+  ans += t[v];
+  seen[v] = 1;
+  for (auto x : a[v]) dfs(x);
+}
+
+バックトラックDFS　
+void dfs(/* 今選んでいるもの,合計値等の変数*/) {
+  if (/* 終了状態*/) {
+    /* 答えを更新*/
+    return;
+  }
+
+  for (/* 候補につき*/) {
+    if (/* 選べない候補なら*/) continue;
+
+    // choose seen=1など
+    dfs(/* 次の状態*/);
+    // unchoose seen=0など
+  }
+}
+
+----------------------------------------
+	二分探索各種
+----------------------------------------
+
+// x未満の個数
+int num = lower_bound(a.begin(), a.end(), x) - a.begin();
+
+// x以下の個数
+int num = upper_bound(a.begin(), a.end(), x) - a.begin();
+ 
+// x以上の個数
+int num = a.end() - lower_bound(a.begin(), a.end(), x);
+// x超の個数
+int num = sz(a)-upper_bound(a.begin(), a.end(), x) - a.begin();
+
+
+// x未満の最大値idx　x以上の最小値idxのひとつ前 最小値idxが先頭ならend()を返す
+auto it = lower_bound (a.begin (), a.end (), x);
+auto idx = it == a.begin () ? a.end () : prev(it);
+// x以下最大値idx　x超最小値idxのひとつ前 最小値idxが先頭ならend()を返す
+auto it = upper_bound(a.begin(), a.end(), x);
+auto idx = (it == a.begin() ? a.end() : prev(it));
+// x以上の最小値idx　 x以上が0個の場合はend()が返る
+auto idx = lower_bound (a.begin (), a.end (), x);
+
+// x超の最小値idx　x超が0個の場合はend()になる
+auto idx = upper_bound(a.begin(), a.end(), x);
+
+
+// x未満の最大値 x以上の最小値のひとつ前　存在しなければ INFI を返す
+auto idx = lower_bound (a.begin (), a.end (), x);
+int val = idx == a.begin () ? INFI : *(prev(idx));
+// x以下の最大値 存在しなければ INFI を返す
+auto idx = upper_bound(a.begin(), a.end(), x);
+int val = (idx == a.begin() ? INFI : *(prev(idx)));
+// x以上の最小値 存在しなければ INFI を返す
+auto idx = lower_bound (a.begin (), a.end (), x);
+int val = idx == a.end() ? INFI : *idx;
+// x超の最小値 存在しなければ INFI を返す
+auto idx =upper_bound(a.begin(), a.end(), x);
+int val = (idx == a.end()) ? INFI : *idx;
+
+// x未満の最大値のインデックス  存在しなければ INFI を返す
+auto it = lower_bound(a.begin(), a.end(), x);
+int idx = it == a.begin() ? INFI : (int)(it - a.begin() - 1));
+// x以下の最大値インデックス(整数)  存在しなければ INFI を返す
+auto it = upper_bound(a.begin(), a.end(), x);
+int idx = it == a.begin() ? INFI : (int)(it - a.begin() - 1));
+// x以上の最大値インデックス(整数)  存在しなければ INFI を返す
+int it= lower_bound(a.begin(), a.end(), x) - a.begin();
+int idx = it == (int) a.size() ? INFI : it;
+// x超の最小値の添字(整数)  存在しなければ INFI を返す
+auto it = upper_bound(a.begin(), a.end(), x);
+int idx = it == a.end() ? INFI : it - a.begin();
+
+
+// 値xの個数
+int num = upper_bound (a.begin (), a.end (), x) - lower_bound (a.begin (), a.end (), x);
+// x以上y以下の個数
+int num = upper_bound(a.begin(), a.end(), y) - lower_bound(a.begin(), a.end(), x);
+
+
+// first >= x の最小インデックス  存在しなければ INFI を返す
+int idx = lower_bound(v.begin(), v.end(), make_pair(x, -INF)) - v.begin();
+if (idx == (int)v.size()) idx = INFI;
+
+// first > x の最小インデックス  存在しなければ INFI を返す
+int idx = upper_bound(v.begin(), v.end(), make_pair(x, INF)) - v.begin();
+if (idx == (int)v.size()) idx = INFI;
+
+// first == x が存在するか
+int idx = lower_bound(v.begin(), v.end(), make_pair(x, -INF)) - v.begin();
+bool ok = (idx < (int)v.size() && v[idx].first == x);
+
+// x未満の最大値idx　x以上の最小値idxのひとつ前 最小値idxが先頭ならend()を返す
+auto it = st.lower_bound(x);
+it = (it == st.begin() ? st.begin() : prev(it));
+// x以下の最大値iterator　x超の最小値iteratorのひとつ前 x以下がないならx超がbeginになるのでend()を返す
+auto it = st.upper_bound(x);
+it = (it == st.begin() ? st.end() : prev(it));
+// x以上の最小値iterator　x以上が0個の場合はend()になる
+auto idx = st.lower_bound(x);
+
+// x超の最小値iterator　x超が0個の場合はend()になる
+auto idx = st.upper_bound(x);
+
+
+// x未満の最大値 x以上の最小値のひとつ前 存在しなければ INFI を返す
+auto idx = st.lower_bound (x);
+int val = idx == st.begin () ? INFI : *(prev(idx));
+// x以下の最大値 存在しなければ INFI を返す
+auto idx = st.upper_bound(x);
+int val = (it == idx.begin()) ? INFI : *(prev(idx));
+// x以上の最小値 存在しなければ INFI を返す
+auto idx= st.lower_bound (x);
+int val = idx == st.end ()  ? INFI : *idx;
+// x超の最小値 存在しなければ INFI を返す
+auto idx = st.upper_bound(x);
+int val = (idx == st.end() ? INFI : *idx);
+
+----------------------------------------
+	めぐる式二分探索
+----------------------------------------
+
+int binary_search(int key) {
+  //「index = 0」が条件を満たすこともあるので、初期値は -1
+  int ng = -1; 
+  // 最大値が条件を満たさないこともあるので、初期値は 最大値＋α
+  int ok =/*最大値*/+α; 
+
+  while (ok - ng > 1) {
+    int mid = ng + (ok - ng) / 2;
+    if (mid >= key) ok = mid;
+    else ng = mid;
+  }  
+  return ok;
+}
+
+int binary_search(int key) {
+//「index = 0」が条件を満たさないこともあるので、初期値は -1
+  int ok = -1; 
+// 最大値が条件を満たすこともあるので、初期値は 最大値+α
+  int ng = /*最大値*/+α; 
+
+  while (ng - ok > 1) {
+    int mid = ok + (ng - ok) / 2;
+    if (mid <= key) ok = mid;
+    else ng = mid;
+  }  
+  return ok;
+}
+
+----------------------------------------
+	二次元いもす法
+----------------------------------------
+
+二次元配列の累積和配列の計算と区間和の取得
+vvl a(h, vl(w));   // 元の配列
+vvl rw(h+1,vl(w+1,0)); // 二次元累積和
+// rw[y][x] = 半開区間 [0,y) × [0,x) の総和
+
+rep(i,0,h){
+  rep(j,0,w){
+    rw[i+1][j+1] =
+    rw[i][j+1]
+  + rw[i+1][j]
+  - rw[i][j]
+  + a[i][j];
+  }
+}
+
+// 長方形 i1~i2 × j1~j2(閉区間)の和の取得
+ll sm =
+   rw[i2+1][j2+1]
+ - rw[i1][j2+1]
+ - rw[i2+1][j1]
+ + rw[i1][j1];
+
+----------------------------------------
+	尺取り法
+----------------------------------------
+
+// 空区間が発生する可能性がある尺取り 「条件を満たす区間が存在しない left」がある
+int right = 0; // [left, right)
+// ll sm = 0;
+
+rep (left, 0, $1){
+  while (right < $1) {
+    if (/* right を追加すると条件を満たさない */) break;
+    // sm += $2[right]; // 累積値にright を追加  
+    right++;
+  }
+
+  // [left, right) を使って答え更新
+
+
+  if (left == right) right++;
+  // else sm -= $2[left]; // 累積値からleft を削除 
+}
+
+// 空区間が発生しない尺取り
+int right = 0; // [left, right)
+// ll sm = 0;
+
+rep (left, 0, $1){
+  while (right < $1) {
+    if (/* right を追加すると条件を満たさない */) break;
+
+    // sm += $2[right]; // 累積値にright を追加
+    right++;
+  }
+
+  // [left, right) を使って答え更新
+
+
+  // sm -= $2[left]; // 累積値からleft を削除
+}
+
+----------------------------------------
+	セグメントツリー
+----------------------------------------
+
+目的	結合測・単位元 (main関数前)	使用時
+区間の和	ll opsm(ll a,ll b){return a + b;} 	  segtree<ll,opsm,esm> segsm(/*配列名*/); // 宣言 データ配列を指定(要素数のみでもok その場合初期値はeの値)
+	ll esm(){return 0;} 	  // segsm.prod(l,r); // 区間 [l,r) の演算結果　ex) ll s=seg.prod(1,4)
+		  // segsm.get(i); // i番目の値を取得
+		  // segsm.set(i,x); // i番目の値を更新
+区間の最大	ll opmx(ll a, ll b) {return max(a, b);}	  segtree<ll,opmx,emx> segmx(/*配列名*/); // 宣言 データ配列を指定(要素数のみでもokその場合初期値はeの値)
+	ll emx() {return LLONG_MIN;}	  // segmx.prod(l,r); // 区間 [l,r) の演算結果　ex) ll s=seg.prod(1,4);
+		  // segmx.get(i); // i番目の値を取得
+		  // segmx.set(i,x); // i番目の値を更新  
+区間の最小	ll opmn(ll a, ll b) {return min(a, b);}	  segtree<ll,opmn,emn> segmn(/*配列名*/); // 宣言 データ配列を指定(要素数のみでもok　初期値はeの値)
+	ll emn() {return LLONG_MAX;}	  // segmn.prod(l,r); // 区間 [l,r) の演算結果　ex) ll s=seg.prod(1,4);
+		  // segmn.get(i); // i番目の値を取得
+		  // segmn.set(i,x); // i番目の値を更新
+区間のgcd	ll opgcd(ll a, ll b) {return gcd(a, b);}	segtree<ll,op,e> seggcd(/*配列名*/); // 宣言 データ配列を指定(要素数のみでもok　初期値はeの値)
+	ll egcd(){return 0;} 	seggcd.prod(l,r) // 区間 [l,r) の演算結果　ex) ll s=seg.prod(1,4);
+		seggcd.get(i) // i番目の値を取得
+		seggcd.set(i,x) // i番目の値を更新
+区間のand	ll opand(ll a, ll b) {return a & b;}	segtree<ll,op,e> segand(/*配列名*/); // 宣言 データ配列を指定(要素数のみでもok　初期値はeの値)
+	ll eand(){return ~0LL;} 	segand.prod(l,r) // 区間 [l,r) の演算結果　ex) ll s=seg.prod(1,4);
+		segand.get(i) // i番目の値を取得
+		segand.set(i,x) // i番目の値を更新
+区間のor	ll opor(ll a, ll b) {return a | b;}	segtree<ll,op,e> segor(/*配列名*/); // 宣言 データ配列を指定(要素数のみでもok　初期値はeの値)
+	ll eor(){return 0;} 	segor.prod(l,r) // 区間 [l,r) の演算結果　ex) ll s=seg.prod(1,4);
+		segor.get(i) // i番目の値を取得
+		segor.set(i,x) // i番目の値を更新
+
+----------------------------------------
+	DFS全列挙
+----------------------------------------
+
+// dfs全列挙(重複なし組合せ(順序で区別しない))
+// 結果はvec_combiに格納
+// nowsize:現在の要素数 スタート時は0を指定する
+// size:作りたい要素数 min,max:要素の最小値最大値
+// ex) dfs(0,10,1,5) 要素数10,値1~5の配列
+vi combi; // 要素を格納する配列  sizeにresizeして使用
+vvi vec_combi; // combiを格納する二次元配列
+void dfs(int nowsize, int size, int min, int max) {
+  if (nowsize== size) {
+    vec_combi.push_back(combi);
+  }
+  else {
+    for (int i = min; i <= max; i++) {
+      combi[nowsize] = i;
+      dfs(nowsize + 1, size, i + 1, max);
+    }
+  }
+}
+
+// dfs全列挙(重複あり組合せ(順序で区別しない))
+// 結果はvec_combiに格納
+// nowsize:現在の要素数 スタート時は0を指定する
+// size:作りたい要素数 min,max:要素の最小値最大値
+// ex) dfs(0,10,1,5) 要素数10,値1~5の配列
+vi combi; // 要素を格納する配列  sizeにresizeして使用
+vvi vec_combi; // combiを格納する二次元配列
+void dfs(int nowsize, int size, int min, int max) {
+  if (nowsize== size) {
+    vec_combi.push_back(combi);
+  }
+  else {
+    for (int i = min; i <= max; i++) {
+      combi[nowsize] = i;
+      dfs(nowsize + 1, size, i, max);
+    }
+  }
+}
+
+// dfs全列挙(重複なし順列(並べ方))
+// 結果はvec_combiに格納
+// nowsize:現在の要素数 スタート時は0を指定する
+// size:作りたい要素数 min,max:要素の最小値最大値
+// ex) dfs(0,10,1,5) 要素数10,値1~5の配列
+vi combi; // 要素を格納する配列  sizeにresizeして使用
+vvi vec_combi; // combiを格納する二次元配列
+vector<bool> used; // 追加したか  resize必要
+void dfs(int nowsize, int size, int min, int max) {
+  if (nowsize== size) {
+    vec_combi.push_back(combi);
+  }
+  else {
+    for (int i = min; i <= max; i++) {
+      // i が使用済みの値かどうかを判定 
+      if (!used[i]) {
+        combi[nowsize] = i;
+        used[i] = true;
+        dfs(nowsize + 1, size, min, max);
+        used[i] = false; 
+      }
+    }
+  }
+}
+
+
+// dfs全列挙(重複あり順列(並べ方))
+// 結果はvec_combiに格納
+// nowsize:現在の要素数 スタート時は0を指定する
+// size:作りたい要素数 min,max:要素の最小値最大値
+// ex) dfs(0,10,1,5) 要素数10,値1~5の配列
+vi combi; // 要素を格納する配列  sizeにresizeして使用
+vvi vec_combi; // combiを格納する二次元配列
+void dfs(int nowsize, int size, int min, int max) {
+  if (nowsize == size) {
+    vec_combi.push_back(combi);
+  }
+  else {
+    for (int i = min; i <= max; i++) {
+      combi[nowsize] = i;
+      dfs(nowsize + 1, size, min, max);
+    }
+  }
+}
+
+----------------------------------------
+	進数変換
+----------------------------------------
+
+// 10進数(long long)を指定の基数(k)表記(string)に変換 基数2〜36
+string to_base(ll n, int k) {
+  if (n == 0) return "0";
+  string digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  string res;
+  bool jdg = (n < 0);
+  if (jdg) n = -n;
+  while (n > 0) {
+    res.push_back(digits[n % k]);
+    n /= k;
+  }
+  if (jdg) res.push_back('-');
+  reverse(res.begin(), res.end());
+  return res; 
+}
+
+// k進数文字列 s を long long に変換する
+// 前提：結果が long long に収まる場合のみ使用可
+// 収まらない場合は LLONG_MAX を返す
+ll from_base(const string &s, int k) {
+static const string digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+unordered_map<char, int> mp;
+for (int i = 0; i < (int)digits.size(); ++i) {
+mp[digits[i]] = i;
+}
+
+ll n = 0;
+for (char c : s) {
+int d = mp[c];
+
+// n * k が long long を超えるか
+if (n > LLONG_MAX / k) {
+return LLONG_MAX;
+}
+n *= k;
+
+// n + d が long long を超えるか
+if (n > LLONG_MAX - d) {
+return LLONG_MAX;
+}
+n += d;
+}
+return n;
+}
+
+
+*/
