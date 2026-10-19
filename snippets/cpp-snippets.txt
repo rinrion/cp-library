@@ -1677,7 +1677,7 @@
 			"\treturn step;",
 			"}"
 		],
-		"description": "隣接グラフでstartから各頂点までの最短ステップ数を配列で返す。未到達は-1"
+		"description": "隣接グラフでstartから各頂点までの最短ステップ数を配列で返す\t未到達は-1"
 	},
 
 
@@ -1709,7 +1709,7 @@
 			"\treturn step;",
 			"}"
 		],
-		"description": "グリッド上でstartから各マスまでの最短ステップ数を配列で返す。未到達は-1"
+		"description": "グリッド上でstartから各マスまでの最短ステップ数を配列で返す\t未到達は-1"
 	},
 	
 	"グラフのBFS経路復元": {
@@ -1753,7 +1753,7 @@
 			"\treturn route;",
 			"}"
 		],
-		"description": "隣接グラフでstartからgoalまでの経路を頂点配列で返す。到達可否はisReachdで返す"
+		"description": "隣接グラフでstartからgoalまでの経路を頂点配列で返す\t到達可否はisReachdで返す"
 	},
 
 
@@ -1800,7 +1800,7 @@
 			"\treturn route;",
 			"}"
 		],
-		"description": "グリッド上でstartからgoalまでの経路をpoint配列で返す。到達可否はisReachdで返す"
+		"description": "グリッド上でstartからgoalまでの経路をpoint配列で返す\t到達可否はisReachdで返す"
 	},
 
 	"グリッドのBFS経路方向": {
@@ -1853,7 +1853,7 @@
 			"\treturn route;",
 			"}"
 		],
-		"description": "グリッド上でstartからgoalまでの経路を方向番号の配列で返す。到達可否はisReachdで返す"
+		"description": "グリッド上でstartからgoalまでの経路を方向番号の配列で返す\t到達可否はisReachdで返す"
 	},
 
 	"基本のBFS": {
@@ -2009,7 +2009,7 @@
 		"prefix": "shakutori-Empty",
 		"body": [
 			"// 空区間が発生する尺取り法",
-			"// 要準備：n、条件式。区間は [left, right)",
+			"// 要準備：n、条件式\t区間は [left, right)",
 			"int right = 0;",
 			"// ll sm = 0;",
 			"",
@@ -2033,7 +2033,7 @@
 		"prefix": "shakutori-NonEmpty",
 		"body": [
 			"// 空区間が発生しない尺取り法",
-			"// 要準備：n、条件式。各 left で有効な非空区間が存在すること",
+			"// 要準備：n、条件式\t各 left で有効な非空区間が存在すること",
 			"int right = 0;",
 			"// ll sm = 0;",
 			"",
@@ -2229,7 +2229,121 @@
 			"\treturn n;",
 			"}"
 		],
-		"description": "k進数の文字列を10進数のllに変換する。オーバーフロー時はLLONG_MAXを返す"
+		"description": "k進数の文字列を10進数のllに変換する\tオーバーフロー時はLLONG_MAXを返す"
+	},
+
+	"個数：x未満": {
+			"prefix": "cntlt",
+			"body": [
+					"// x未満の個数\t要素を昇順にソートしておくこと",
+					"int ${1:num} = (int)(lower_bound(${2:a}.begin(), ${2:a}.end(), ${3:x}) - ${2:a}.begin());"
+			],
+			"description": "x未満の個数\t配列の昇順ソートが必要"
+	},
+
+	"個数：x以下": {
+			"prefix": "cntle",
+			"body": [
+					"// x以下の個数\t要素を昇順にソートしておくこと",
+					"int ${1:num} = (int)(upper_bound(${2:a}.begin(), ${2:a}.end(), ${3:x}) - ${2:a}.begin());"
+			],
+			"description": "x以下の個数\t配列の昇順ソートが必要"
+	},
+
+	"個数：x以上": {
+			"prefix": "cntge",
+			"body": [
+					"// x以上の個数\t要素を昇順にソートしておくこと",
+					"int ${1:num} = (int)(${2:a}.end() - lower_bound(${2:a}.begin(), ${2:a}.end(), ${3:x}));"
+			],
+			"description": "x以上の個数\t配列の昇順ソートが必要"
+	},
+
+	"個数：x超": {
+			"prefix": "cntgt",
+			"body": [
+					"// xより大きい要素の個数\t要素を昇順にソートしておくこと",
+					"int ${1:num} = (int)(${2:a}.end() - upper_bound(${2:a}.begin(), ${2:a}.end(), ${3:x}));"
+			],
+			"description": "xより大きい要素の個数\t配列の昇順ソートが必要"
+	},
+
+	"個数：値x": {
+			"prefix": "cntval",
+			"body": [
+					"// 値xの個数\t要素を昇順にソートしておくこと",
+					"int ${1:num} = (int)(upper_bound(${2:a}.begin(), ${2:a}.end(), ${3:x}) - lower_bound(${2:a}.begin(), ${2:a}.end(), ${3:x}));"
+			],
+			"description": "値xの個数\t配列の昇順ソートが必要"
+	},
+
+	"個数：x以上y以下": {
+			"prefix": "cntrange",
+			"body": [
+					"// x以上y以下の個数（x <= yが前提）\t要素を昇順にソートしておくこと",
+					"int ${1:num} = (int)(upper_bound(${2:a}.begin(), ${2:a}.end(), ${4:y}) - lower_bound(${2:a}.begin(), ${2:a}.end(), ${3:x}));"
+			],
+			"description": "x以上y以下の個数\t配列の昇順ソートが必要（x <= yが前提）"
+	},
+
+	"インデックス：x以上の最初の位置": {
+			"prefix": "lbidx",
+			"body": [
+					"// x以上となる最初の位置\tなければINFI\t要素を昇順にソートしておくこと",
+					"auto ${1:it} = lower_bound(${2:a}.begin(), ${2:a}.end(), ${3:x});",
+					"int ${4:idx} = (${1:it} == ${2:a}.end() ? INFI : (int)(${1:it} - ${2:a}.begin()));"
+			],
+			"description": "x以上となる最初の位置\t存在しなければINFI\t配列の昇順ソートが必要"
+	},
+
+	"インデックス：x超の最初の位置": {
+			"prefix": "ubidx",
+			"body": [
+					"// xより大きい値の最初の位置\tなければINFI\t要素を昇順にソートしておくこと",
+					"auto ${1:it} = upper_bound(${2:a}.begin(), ${2:a}.end(), ${3:x});",
+					"int ${4:idx} = (${1:it} == ${2:a}.end() ? INFI : (int)(${1:it} - ${2:a}.begin()));"
+			],
+			"description": "xより大きい値の最初の位置\t存在しなければINFI\t配列の昇順ソートが必要"
+	},
+
+	"値：x以上の最小値": {
+			"prefix": "lbval",
+			"body": [
+					"// x以上の最小値\tなければINFL\t要素を昇順にソートしておくこと",
+					"auto ${1:it} = lower_bound(${2:a}.begin(), ${2:a}.end(), ${3:x});",
+					"ll ${4:val} = (${1:it} == ${2:a}.end() ? INFL : *${1:it});"
+			],
+			"description": "x以上の最小値\t存在しなければINFL\t配列の昇順ソートが必要"
+	},
+
+	"値：x超の最小値": {
+			"prefix": "ubval",
+			"body": [
+					"// xより大きい最小値\tなければINFL\t要素を昇順にソートしておくこと",
+					"auto ${1:it} = upper_bound(${2:a}.begin(), ${2:a}.end(), ${3:x});",
+					"ll ${4:val} = (${1:it} == ${2:a}.end() ? INFL : *${1:it});"
+			],
+			"description": "xより大きい最小値\t存在しなければINFL\t配列の昇順ソートが必要"
+	},
+
+	"値：x未満の最大値": {
+			"prefix": "prevlt",
+			"body": [
+					"// x未満の最大値\tなければ-INFL\t要素を昇順にソートしておくこと",
+					"auto ${1:it} = lower_bound(${2:a}.begin(), ${2:a}.end(), ${3:x});",
+					"ll ${4:val} = (${1:it} == ${2:a}.begin() ? -INFL : *prev(${1:it}));"
+			],
+			"description": "x未満の最大値\t存在しなければ-INFL\t配列の昇順ソートが必要"
+	},
+
+	"値：x以下の最大値": {
+			"prefix": "prevle",
+			"body": [
+					"// x以下の最大値\tなければ-INFL\t要素を昇順にソートしておくこと",
+					"auto ${1:it} = upper_bound(${2:a}.begin(), ${2:a}.end(), ${3:x});",
+					"ll ${4:val} = (${1:it} == ${2:a}.begin() ? -INFL : *prev(${1:it}));"
+			],
+			"description": "x以下の最大値\t存在しなければ-INFL\t配列の昇順ソートが必要"
 	},
 
 
